@@ -31,5 +31,10 @@ public class StudentServicesImpl implements StudentServices{
 	public Student getStudent(StudentAdmissionDTO sad) {
 		return studentDao.getStudent(sad);
 	}
+
+	@Override
+	public boolean checkStudentUnique(Student student) {
+		return studentDao.checkStudentUnique(student);
+	}
  
 }

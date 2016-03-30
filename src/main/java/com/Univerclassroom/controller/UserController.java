@@ -54,18 +54,24 @@ public class UserController {
 		
 		
 			Student student = new Student(admission);
-			boolean isStudentSave = studentServices.addOrUpdateStudent(student);
-			Parent parent = new Parent(admission);
-			boolean isParentSave = parentServices.addOrUpdateParent(parent);
-			Student studObj = studentServices.getStudent(admission);
-			Parent parentObj = parentServices.getParent(admission);
-			StudentToParent stp = new StudentToParent();
-			stp.setParent(parentObj);
-			stp.setStudent(studObj);
-			boolean isSADSave = studentServices.addOrUpdateStudentToParent(stp);
-			if(isStudentSave && isParentSave && isSADSave){
-				obj.put("admission", "form submitted");
+			boolean isStudentUnique = studentServices.checkStudentUnique(student);
+			if(isStudentUnique){
+				boolean isStudentSave = studentServices.addOrUpdateStudent(student);
+				Parent parent = new Parent(admission);
+				boolean isParentSave = parentServices.addOrUpdateParent(parent);
+				Student studObj = studentServices.getStudent(admission);
+				Parent parentObj = parentServices.getParent(admission);
+				StudentToParent stp = new StudentToParent();
+				stp.setParent(parentObj);
+				stp.setStudent(studObj);
+				boolean isSADSave = studentServices.addOrUpdateStudentToParent(stp);
+				if(isStudentSave && isParentSave && isSADSave){
+					obj.put("admission", "form submitted");
+				}	
+			}else{
+				obj.put("admission", "form Not submitted");
 			}
+			
 			
 			response.setContentType("application/json; charset=UTF-8"); 
 			response.getWriter().print(new JSONSerializer().exclude("class","*.class","authorities").deepSerialize(obj));

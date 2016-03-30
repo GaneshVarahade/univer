@@ -1,6 +1,10 @@
 package com.Univerclassroom.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
 import com.Univerclassroom.model.Admin;
+import com.Univerclassroom.model.FeeStructure;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
 
@@ -63,14 +68,7 @@ public class StudentDaoImpl implements StudentDao{
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Student.class);
-		criteria.add(Restrictions.eq("StudentFirstName", sad.getStudentFirstName()));
-		criteria.add(Restrictions.eq("StudentLastName", sad.getStudentLastName()));
-		criteria.add(Restrictions.eq("Nationality", sad.getNationality()));
-		criteria.add(Restrictions.eq("DOB", sad.getDob()));
-		criteria.add(Restrictions.eq("DOBPlace", sad.getDobPlace()));
-		criteria.add(Restrictions.eq("DOBDistrict", sad.getDobDistrict()));
-		criteria.add(Restrictions.eq("DOBState", sad.getDobState()));
-		criteria.add(Restrictions.eq("BloodGroup", sad.getBloodGroup()));
+		criteria.add(Restrictions.eq("StudentEmailId", sad.getStudentEmailId()));
 		Object result=criteria.uniqueResult();
 		student = (Student)result;
 		tx.commit();
@@ -79,6 +77,33 @@ public class StudentDaoImpl implements StudentDao{
 			e.printStackTrace();
 		}
 		return student;
+	}
+
+	@Override
+	public boolean checkStudentUnique(Student student) {
+		boolean flag = false;
+		List<Student> list = new ArrayList<Student>();
+	    try{    
+	    	session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+		String hql = "from Student where StudentEmailId =:studentEmailId";
+		Query query = session.createQuery(hql);
+		query.setString("studentEmailId", student.getStudentEmailId());
+		list = query.list();
+	} catch (Exception e) {
+		
+		e.printStackTrace();
+	}
+	    
+
+	    if(list.isEmpty()){
+	    	flag = true;
+	    }else{
+	    	flag = false;
+	    }
+
+	return flag;
+
 	}
 
 }

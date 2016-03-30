@@ -48,17 +48,7 @@ public class ParentDaoImpl implements ParentDao{
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Parent.class);
-		criteria.add(Restrictions.eq("FatherFirstName", sad.getFatherFirstName()));
-		criteria.add(Restrictions.eq("FatherLastName", sad.getFatherLastName()));
-		criteria.add(Restrictions.eq("MotherFirstName", sad.getMotherFirstName()));
-		criteria.add(Restrictions.eq("MotherLastName", sad.getMotherLastName()));
-		if(sad.getGuardianFirstName() != null)
-		criteria.add(Restrictions.eq("GuardianFirstName", sad.getGuardianFirstName()));
-		if(sad.getGuardianLastName() != null)
-		criteria.add(Restrictions.eq("GuardianLastName", sad.getGuardianLastName()));
-		criteria.add(Restrictions.eq("FatherOccupation", sad.getFatherOccupation()));
-		criteria.add(Restrictions.eq("MotherOccupation", sad.getMotherOccupation()));
-		criteria.add(Restrictions.eq("FatherAnnualIncome", sad.getFatherAnnualIncome()));
+		criteria.add(Restrictions.eq("ParentEmailId", sad.getParentEmailId()));
 		Object result=criteria.uniqueResult();
 		parent = (Parent)result;
 		tx.commit();

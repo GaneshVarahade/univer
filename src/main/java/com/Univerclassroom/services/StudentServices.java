@@ -9,4 +9,5 @@ public interface StudentServices {
 	boolean addOrUpdateStudent(Student student);
 	boolean addOrUpdateStudentToParent(StudentToParent stp);
 	Student getStudent(StudentAdmissionDTO sad);
+	boolean checkStudentUnique(Student student);
 }
