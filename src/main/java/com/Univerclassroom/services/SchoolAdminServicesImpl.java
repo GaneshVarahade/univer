@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.Univerclassroom.dao.AdminDao;
 import com.Univerclassroom.dao.SchoolAdminDao;
 import com.Univerclassroom.model.Admin;
+import com.Univerclassroom.model.AdmissionResult;
 import com.Univerclassroom.model.SchoolAdmin;
+import com.Univerclassroom.model.StudentToParent;
 
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true) 
 @Service("Schooladminservices")
@@ -40,8 +42,20 @@ public class SchoolAdminServicesImpl implements SchoolAdminServices {
 	public SchoolAdmin getSchoolAdminByUsername(String username) {
 		return Schooladmindao.getSchoolAdminByUsername(username);
 		}
-	
-	
 
+	@Override
+	public List<StudentToParent> getAdmissionList() {
+		return Schooladmindao.getAdmissionList();
+	}
 
+	@Override
+	public StudentToParent getStudentToParentById(long id) {
+		return Schooladmindao.getStudentToParentById(id);
+	}
+
+	@Override
+	public boolean addAdmissionResult(AdmissionResult ar) throws Exception {
+		return Schooladmindao.addAdmissionResult(ar);
+	}
+	
 }

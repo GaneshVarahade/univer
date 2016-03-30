@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Univerclassroom.model.Admin;
+import com.Univerclassroom.model.AdmissionResult;
 import com.Univerclassroom.model.SchoolAdmin;
+import com.Univerclassroom.model.StudentToParent;
 
 @Proxy(lazy=false)
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true) 
@@ -29,16 +31,18 @@ public class SchoolAdminDaoImpl implements SchoolAdminDao{
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
 	public boolean addSchoolAdmin(SchoolAdmin Schooladmin) throws Exception {
+		boolean flag = false;
 		 try{    
 		    	session = sessionFactory.openSession();
 				tx = session.beginTransaction();
 				session.save(Schooladmin);
+				flag = true;
 				tx.commit();
 				session.close();
 		    }catch(Exception e){
 		    	e.printStackTrace();
 		    }
-			return true;		
+			return flag;		
 	}
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
@@ -113,7 +117,6 @@ public class SchoolAdminDaoImpl implements SchoolAdminDao{
 			session = sessionFactory.openSession();
 			Criteria criteria = session.createCriteria(SchoolAdmin.class);
 			 criteria.add(Restrictions.eq("Username", username));
-			 System.out.println("hello"+username);
 			 Object result=criteria.uniqueResult();
 			 Schooladmin = (SchoolAdmin)result;
 			
@@ -123,6 +126,61 @@ public class SchoolAdminDaoImpl implements SchoolAdminDao{
 		}
 		return Schooladmin;
 	
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	@Override
+	public List<StudentToParent> getAdmissionList() {
+		Session session;
+		List<StudentToParent> stpList = null;
+		try{
+			session = sessionFactory.openSession();
+			Criteria criteria = session.createCriteria(StudentToParent.class);
+			criteria.createAlias("student", "stud");
+			 criteria.add(Restrictions.eq("stud.isAdmission", false));
+			 stpList = criteria.list();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return stpList;
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	@Override
+	public StudentToParent getStudentToParentById(long id) {
+		Session session;
+		StudentToParent  stp = null;
+		try{
+			session = sessionFactory.openSession();
+			Criteria criteria = session.createCriteria(StudentToParent.class);
+			 criteria.add(Restrictions.eq("id", id));
+			 Object result=criteria.uniqueResult();
+			 stp = (StudentToParent)result;
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return stp;
+	
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	@Override
+	public boolean addAdmissionResult(AdmissionResult ar) throws Exception {
+		boolean flag = false;
+		 try{    
+		    	session = sessionFactory.openSession();
+				tx = session.beginTransaction();
+				session.save(ar);
+				flag = true;
+				tx.commit();
+				session.close();
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }
+			return flag;	
 	}
 	
 	

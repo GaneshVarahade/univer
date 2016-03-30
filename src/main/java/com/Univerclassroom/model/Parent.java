@@ -29,7 +29,7 @@ public class Parent {
 	private String FatherOccupation;
 	private String MotherOccupation;
 	private String FatherAnnualIncome;
-	
+	private String ParentEmailId;
 	
 	public long getParentId() {
 		return ParentId;
@@ -91,6 +91,12 @@ public class Parent {
 	public void setFatherAnnualIncome(String fatherAnnualIncome) {
 		FatherAnnualIncome = fatherAnnualIncome;
 	}
+	public String getParentEmailId() {
+		return ParentEmailId;
+	}
+	public void setParentEmailId(String parentEmailId) {
+		ParentEmailId = parentEmailId;
+	}
 	
 	public Parent(){
 		
@@ -106,5 +112,7 @@ public class Parent {
 		this.FatherOccupation = s.getFatherOccupation();
 		this.MotherOccupation = s.getMotherOccupation();
 		this.FatherAnnualIncome = s.getFatherAnnualIncome();
+		this.ParentEmailId = s.getParentEmailId();
 	}
+	
 }

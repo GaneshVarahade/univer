@@ -32,6 +32,7 @@ public class StudentToParent {
 	@JoinColumn(name = "ParentId", insertable = true, updatable = true, nullable = true, unique = true)
 	private Parent parent;
 
+
 	public long getId() {
 		return Id;
 	}

@@ -39,7 +39,36 @@ public class Student implements Serializable{
 	private String LastResult;
 	private String LastClass;
 	private String ClassAdmission;
+	private String Medium;
+	private boolean isAdmission;
+	private boolean PhysicallyHandicapped;
+	private String StudentEmailId;
+	private String Gendar;
 	
+	public boolean isAdmission() {
+		return isAdmission;
+	}
+
+	public void setAdmission(boolean isAdmission) {
+		this.isAdmission = isAdmission;
+	}
+
+	public String getStudentEmailId() {
+		return StudentEmailId;
+	}
+
+	public void setStudentEmailId(String studentEmailId) {
+		StudentEmailId = studentEmailId;
+	}
+
+	public String getGendar() {
+		return Gendar;
+	}
+
+	public void setGendar(String gendar) {
+		Gendar = gendar;
+	}
+
 	public long getStudentId() {
 		return StudentId;
 	}
@@ -184,6 +213,22 @@ public class Student implements Serializable{
 		ClassAdmission = classAdmission;
 	}
 
+	public String getMedium() {
+		return Medium;
+	}
+
+	public void setMedium(String medium) {
+		Medium = medium;
+	}
+
+	public boolean isPhysicallyHandicapped() {
+		return PhysicallyHandicapped;
+	}
+
+	public void setPhysicallyHandicapped(boolean physicallyHandicapped) {
+		PhysicallyHandicapped = physicallyHandicapped;
+	}
+	
 	public Student(){
 		
 	}
@@ -191,6 +236,8 @@ public class Student implements Serializable{
 	public Student(StudentAdmissionDTO s){
 		this.StudentFirstName = s.getStudentFirstName();
 		this.StudentLastName = s.getStudentLastName();
+		this.Gendar = s.getGender();
+		this.StudentEmailId = s.getStudentEmailId();
 		this.Nationality  = s.getNationality();
 		this.State = s.getState();
 		this.LocalAddress = s.getLocalAddress();
@@ -203,9 +250,15 @@ public class Student implements Serializable{
 		this.DOBState = s.getDobState();
 		this.BloodGroup = s.getBloodGroup();
 		this.ClassAdmission = s.getClassAdmission();
+		this.isAdmission = s.isAdmission();
 		this.LastSchool = s.getLastSchool();
 		this.LastClass = s.getLastClass();
 		this.LastResult = s.getLastResult();
+		this.Medium = s.getMedium();
+		this.PhysicallyHandicapped = s.isPhysicallyHandicapped();
 	}
+
+	
+	
 	
 }

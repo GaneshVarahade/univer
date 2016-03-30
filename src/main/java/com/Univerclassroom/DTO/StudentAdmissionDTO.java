@@ -6,12 +6,15 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 public class StudentAdmissionDTO {
     private String StudentFirstName;
     private String StudentLastName;
+    private String StudentEmailId;
+    private String Gender;
     private String FatherFirstName;
     private String FatherLastName;
     private String MotherFirstName;
     private String MotherLastName;
     private String GuardianFirstName;
     private String GuardianLastName;
+    private String ParentEmailId;
     private String FatherOccupation;
     private String MotherOccupation;
     private String FatherAnnualIncome;
@@ -30,7 +33,35 @@ public class StudentAdmissionDTO {
     private String LastResult;
     private String LastClass;
     private String ClassAdmission;
-    public String getStudentFirstName() {
+    private boolean isAdmission = false;
+    private boolean PhysicallyHandicapped;
+    private String Medium;
+    
+    public String getStudentEmailId() {
+		return StudentEmailId;
+	}
+	public void setStudentEmailId(String studentEmailId) {
+		StudentEmailId = studentEmailId;
+	}
+	public String getGender() {
+		return Gender;
+	}
+	public void setGender(String gender) {
+		Gender = gender;
+	}
+	public String getParentEmailId() {
+		return ParentEmailId;
+	}
+	public void setParentEmailId(String parentEmailId) {
+		ParentEmailId = parentEmailId;
+	}
+	public boolean isAdmission() {
+		return isAdmission;
+	}
+	public void setAdmission(boolean isAdmission) {
+		this.isAdmission = isAdmission;
+	}
+	public String getStudentFirstName() {
         return StudentFirstName;
     }
     public void setStudentFirstName(String studentFirstName) {
@@ -186,5 +217,17 @@ public class StudentAdmissionDTO {
     public void setClassAdmission(String classAdmission) {
         ClassAdmission = classAdmission;
     }
+	public boolean isPhysicallyHandicapped() {
+		return PhysicallyHandicapped;
+	}
+	public void setPhysicallyHandicapped(boolean physicallyHandicapped) {
+		PhysicallyHandicapped = physicallyHandicapped;
+	}
+	public String getMedium() {
+		return Medium;
+	}
+	public void setMedium(String medium) {
+		Medium = medium;
+	}
     
 }
