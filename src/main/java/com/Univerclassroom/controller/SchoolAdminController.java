@@ -22,11 +22,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.AdmissionResult;
+import com.Univerclassroom.model.FeeStructure;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.StudentToParent;
 import com.Univerclassroom.DTO.AdmissionResultDTO;
+import com.Univerclassroom.DTO.FeeStructureDTO;
 import com.Univerclassroom.DTO.SchoolAdminDTO;
 import com.Univerclassroom.services.AdminServices;
+import com.Univerclassroom.services.FeeStructureServices;
 import com.Univerclassroom.services.SchoolAdminServices;
 
 import flexjson.JSONSerializer;
@@ -43,6 +46,8 @@ public class SchoolAdminController {
 	@Autowired
 	AdminServices adminservices;
 	
+	@Autowired
+	FeeStructureServices feeStructureServices;
 	
 	public static HashMap<String, String> map = new HashMap<String, String>();
 	
@@ -128,7 +133,6 @@ public class SchoolAdminController {
 		
 		SchoolAdminController sac = new SchoolAdminController();
 		List<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-	//	Map<String,Object> obj = new HashMap<String,Object>();
 		 HashMap<String, String> map = sac.getHashmap();
 		 Object value = map.get(SchooladminDTO.getSessionId());	 
 		 List<StudentToParent> stpList = null;
@@ -178,6 +182,85 @@ public class SchoolAdminController {
 		 }
 		 response.setContentType("application/json; charset=UTF-8"); 
 			response.getWriter().print(new JSONSerializer().exclude("class","*.class","authorities").deepSerialize(obj));
+		
+	}
+	
+	
+	@RequestMapping(value = "/feeStructure/", method = RequestMethod.POST, headers = "content-type=application/json")
+	public @ResponseBody
+	void feeStructure(@RequestBody FeeStructureDTO feeDTO,HttpServletRequest request,HttpServletResponse response) throws Exception {
+		List<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		Map<String,Object> obj = new HashMap<String,Object>();
+		SchoolAdminController sac = new SchoolAdminController();
+		HashMap<String, String> map = sac.getHashmap();
+		 Object value = map.get(feeDTO.getSessionId());
+		 List<FeeStructure> feeList = null;
+		 boolean isList = false;
+		 boolean isDelete = false;
+		 if(value == null){
+			
+		 }else{
+			 if((value.toString()).equals(feeDTO.getSessionId())){
+				 if(feeDTO.getAction().equals("add")){
+				 boolean flag = false;
+				 FeeStructure fee = new FeeStructure(feeDTO);
+				 boolean isUnique = feeStructureServices.checkClassUnique(fee);
+				 if(isUnique){
+				 flag  = feeStructureServices.addFeeStructure(fee); 
+				 }
+				 else{
+					 obj.put("Class", "Not unique");
+				 }
+				 if(isUnique && flag){
+					 obj.put("Fee", "Added");
+				 }else{
+					 obj.put("Fee", "Not Added");
+				 }
+			 }
+			if(feeDTO.getAction().equals("update")){
+				 boolean flag = false;
+				 FeeStructure fee =  feeStructureServices.getFeeStructurebyClassname(feeDTO.getClassName());
+				fee.setFee(feeDTO.getFee());
+				fee.setYear(feeDTO.getYear());
+				
+					 flag  = feeStructureServices.addFeeStructure(fee); 
+				 
+				 if(flag){
+					 obj.put("Fee", "Updated");
+				 }else{
+					 obj.put("Fee", "Not updated");
+				 }
+			}
+			if(feeDTO.getAction().equals("list")){
+				isList = true;
+				 feeList=feeStructureServices.getFeeStructureList();
+				 for (FeeStructure fee : feeList) {
+					 HashMap<String, Object> object = new HashMap<String,Object>();
+					 object.put("Id", fee.getId());
+					 object.put("ClassName", fee.getClassName());
+					 object.put("year", fee.getYear());
+					 object.put("fee", fee.getFee());
+					 list.add(object);
+				}
+			}
+			if(feeDTO.getAction().equals("delete")){
+				isDelete=true;
+				//FeeStructure fee = feeStructureServices.getFeeStructureById(feeDTO.getFeeId());
+				boolean flag = feeStructureServices.deleteFeeStructure(feeDTO.getFeeId());
+				if(flag){
+					obj.put("Fee", "deleted");
+				}
+			}
+			}
+			 
+		 }	
+		if(isList){
+			 response.setContentType("application/json; charset=UTF-8"); 
+			 response.getWriter().print(new JSONSerializer().exclude("class","*.class","authorities").deepSerialize(list));
+		}else{
+			 response.setContentType("application/json; charset=UTF-8"); 
+			 response.getWriter().print(new JSONSerializer().exclude("class","*.class","authorities").deepSerialize(obj));
+		}
 		
 	}
 	

@@ -31,7 +31,8 @@
 				<value>com.Univerclassroom.model.Parent</value>
 				<value>com.Univerclassroom.model.StudentToParent</value>
 				<value>com.Univerclassroom.model.AdmissionResult</value>	  		
-				<value>com.Univerclassroom.model.School</value>	      
+				<value>com.Univerclassroom.model.School</value>	   
+				<value>com.Univerclassroom.model.FeeStructure</value>	   
 		  </list>
 		</property>
 		<property name="hibernateProperties">
@@ -67,4 +68,7 @@
 	
 	<bean id="SchoolDao" class="com.Univerclassroom.dao.SchoolDaoImpl"></bean>
 	<bean id="SchoolServices" class="com.Univerclassroom.services.SchoolServicesImpl"></bean>
+	
+	<bean id="FeeStructureDao" class="com.Univerclassroom.dao.FeeStructureDaoImpl"></bean>
+	<bean id="FeeStructureServices" class="com.Univerclassroom.services.FeeStructureServicesImpl"></bean>
 </beans>

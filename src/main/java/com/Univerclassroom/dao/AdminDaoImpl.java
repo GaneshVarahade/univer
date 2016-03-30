@@ -97,8 +97,6 @@ public class AdminDaoImpl implements AdminDao
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
 	public Admin getAdminByUsername(String username) {
-		
-		
 			Session session;
 			Admin  admin = null;
 			try{
