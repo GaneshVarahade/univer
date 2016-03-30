@@ -16,7 +16,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/Univerclassroom" />
 		<property name="username" value="root" />
-		<property name="password" value="root" />
+		<property name="password" value="admin" />
 	</bean>
 
 	<bean id="sessionFactory"
@@ -31,7 +31,7 @@
 				<value>com.Univerclassroom.model.Parent</value>
 				<value>com.Univerclassroom.model.StudentToParent</value>
 				<value>com.Univerclassroom.model.AdmissionResult</value>	  		
-					      
+				<value>com.Univerclassroom.model.School</value>	      
 		  </list>
 		</property>
 		<property name="hibernateProperties">
@@ -64,4 +64,7 @@
 	
 	<bean id="ParentDao" class="com.Univerclassroom.dao.ParentDaoImpl"></bean>
 	<bean id="ParentServices" class="com.Univerclassroom.services.ParentServicesImpl"></bean>
+	
+	<bean id="SchoolDao" class="com.Univerclassroom.dao.SchoolDaoImpl"></bean>
+	<bean id="SchoolServices" class="com.Univerclassroom.services.SchoolServicesImpl"></bean>
 </beans>
