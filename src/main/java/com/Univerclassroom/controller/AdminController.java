@@ -49,14 +49,10 @@ public class AdminController {
 		Map<String,Object> obj = new HashMap<String,Object>();
 		 String sessionId = null;
 		
-		System.out.println("hello");
-		
 		Admin admin=new Admin(adminDTO);
 		System.out.println(adminDTO.getAdminPassword());
 	        if( adminservices.login(admin))	 
 	        { 
-	        	System.out.println(adminDTO.getAdminPassword());
-	        	
 			 HttpSession sessionn = request.getSession();
 			 sessionId = sessionn.getId();
 			 map.put(sessionId, sessionId);
@@ -66,9 +62,6 @@ public class AdminController {
 			 obj.put("sessionId", sessionId);
 			 obj.put("login", "successful");
 	        }
-			
-	      
-	        
 			else
 			{
 				obj.put("login", "unsuccessful");

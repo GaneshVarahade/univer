@@ -30,7 +30,21 @@ public class Parent {
 	private String MotherOccupation;
 	private String FatherAnnualIncome;
 	private String ParentEmailId;
+	private String ParentUsername;
+	private String ParentPassword;
 	
+	public String getParentUsername() {
+		return ParentUsername;
+	}
+	public void setParentUsername(String parentUsername) {
+		ParentUsername = parentUsername;
+	}
+	public String getParentPassword() {
+		return ParentPassword;
+	}
+	public void setParentPassword(String parentPassword) {
+		ParentPassword = parentPassword;
+	}
 	public long getParentId() {
 		return ParentId;
 	}

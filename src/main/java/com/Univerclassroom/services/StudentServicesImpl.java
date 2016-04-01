@@ -36,5 +36,15 @@ public class StudentServicesImpl implements StudentServices{
 	public boolean checkStudentUnique(Student student) {
 		return studentDao.checkStudentUnique(student);
 	}
+
+	@Override
+	public boolean checkRollNo(String rollNo) {
+		return studentDao.checkRollNo(rollNo);
+	}
+
+	@Override
+	public boolean checkUsername(String username) {
+		return studentDao.checkUsername(username);
+	}
  
 }

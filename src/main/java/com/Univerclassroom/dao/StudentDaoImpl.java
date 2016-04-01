@@ -106,4 +106,48 @@ public class StudentDaoImpl implements StudentDao{
 
 	}
 
+	@Override
+	public boolean checkRollNo(String rollNo) {
+		boolean flag=false;
+		 Student student = null;
+		    try{  	
+		    session = sessionFactory.openSession();
+			Criteria c = session.createCriteria(Student.class);
+			c.add(Restrictions.eq("RollNo", rollNo));
+			Object o = c.uniqueResult();
+			student = (Student)o;
+			if(o==null)
+			{
+				flag=true;
+			}
+			
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }
+			return flag;
+	}
+
+	@Override
+	public boolean checkUsername(String username) {
+		 boolean flag=false;
+		 Student student = null;
+		    try{  	
+		    session = sessionFactory.openSession();
+			Criteria c = session.createCriteria(Student.class);
+			c.add(Restrictions.eq("StudentUsername", username));
+			Object o = c.uniqueResult();
+			student = (Student)o;
+			if(o==null)
+			{
+				flag=true;
+			}
+			
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }
+			return flag;
+		
+	}
+
+
 }

@@ -44,7 +44,33 @@ public class Student implements Serializable{
 	private boolean PhysicallyHandicapped;
 	private String StudentEmailId;
 	private String Gendar;
-	
+	private String RollNo;
+	private String StudentUsername;
+	private String StudentPassword;
+	public String getRollNo() {
+		return RollNo;
+	}
+
+	public void setRollNo(String rollNo) {
+		RollNo = rollNo;
+	}
+
+	public String getStudentUsername() {
+		return StudentUsername;
+	}
+
+	public void setStudentUsername(String studentUsername) {
+		StudentUsername = studentUsername;
+	}
+
+	public String getStudentPassword() {
+		return StudentPassword;
+	}
+
+	public void setStudentPassword(String studentPassword) {
+		StudentPassword = studentPassword;
+	}
+
 	public boolean isAdmission() {
 		return isAdmission;
 	}

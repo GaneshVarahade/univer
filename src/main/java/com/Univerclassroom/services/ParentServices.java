@@ -6,4 +6,5 @@ import com.Univerclassroom.model.Parent;
 public interface ParentServices {
 	boolean addOrUpdateParent(Parent parent);
 	Parent getParent(StudentAdmissionDTO sad);
+	public boolean checkUsername(String username);	
 }

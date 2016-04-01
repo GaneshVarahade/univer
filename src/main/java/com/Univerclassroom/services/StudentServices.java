@@ -10,4 +10,6 @@ public interface StudentServices {
 	boolean addOrUpdateStudentToParent(StudentToParent stp);
 	Student getStudent(StudentAdmissionDTO sad);
 	boolean checkStudentUnique(Student student);
+	public boolean checkRollNo(String  rollNo);
+	public boolean checkUsername(String username);	
 }

@@ -10,4 +10,5 @@ public interface ParentDao {
 
 	boolean addOrUpdateParent(Parent parent);
 	Parent getParent(StudentAdmissionDTO sad);
+	public boolean checkUsername(String username);	
 }

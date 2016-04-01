@@ -27,17 +27,18 @@ public class AdminDaoImpl implements AdminDao
 
 	@Override
 	public boolean addAdmin(Admin admin) {
-		 
+		 boolean flag = false;
 		    try{    
 		    	session = sessionFactory.openSession();
 				tx = session.beginTransaction();
 				session.saveOrUpdate(admin);
+				flag = true;
 				tx.commit();
 				session.close();
 		    }catch(Exception e){
 		    	e.printStackTrace();
 		    }
-			return false;			
+			return flag;			
 		}
 	
 	@Override

@@ -60,4 +60,25 @@ public class ParentDaoImpl implements ParentDao{
 
 	}
 
+	@Override
+	public boolean checkUsername(String username) {
+		boolean flag=false;
+		 Parent parent = null;
+		    try{  	
+		    session = sessionFactory.openSession();
+			Criteria c = session.createCriteria(Parent.class);
+			c.add(Restrictions.eq("ParentUsername", username));
+			Object o = c.uniqueResult();
+			parent = (Parent)o;
+			if(o==null)
+			{
+				flag=true;
+			}
+			
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }
+			return flag;
+	}
+
 }

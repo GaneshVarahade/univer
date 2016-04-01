@@ -26,6 +26,11 @@ public class ParentServicesImpl implements ParentServices{
 	public Parent getParent(StudentAdmissionDTO sad) {
 		return parentDao.getParent(sad);
 	}
+
+	@Override
+	public boolean checkUsername(String username) {
+		return parentDao.checkUsername(username);
+	}
 	
 	
 }

@@ -34,6 +34,7 @@
 				<value>com.Univerclassroom.model.School</value>	   
 				<value>com.Univerclassroom.model.FeeStructure</value>	   
 				<value>com.Univerclassroom.model.Librarian</value>  
+				<value>com.Univerclassroom.model.Account</value>  
 		  </list>
 		</property>
 		<property name="hibernateProperties">
@@ -75,4 +76,7 @@
 	
 	<bean id="LibrarianDao" class="com.Univerclassroom.dao.LibrarianDaoImpl"></bean>
 	<bean id="LibrarianServices" class="com.Univerclassroom.services.LibrarianServicesImpl"></bean>
+	
+	<bean id="AccountDao" class="com.Univerclassroom.dao.AccountDaoImpl"></bean>
+	<bean id="AccountServices" class="com.Univerclassroom.services.AccountServicesImpl"></bean>
 </beans>

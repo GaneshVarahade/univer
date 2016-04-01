@@ -3,6 +3,7 @@ package com.Univerclassroom.dao;
 import org.hibernate.annotations.Proxy;
 
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
+import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
 
@@ -13,4 +14,6 @@ public interface StudentDao {
 	boolean addOrUpdateStudentToParent(StudentToParent stp);
 	Student getStudent(StudentAdmissionDTO sad);
 	boolean checkStudentUnique(Student student);
+	public boolean checkRollNo(String  rollNo);
+	public boolean checkUsername(String username);	
 }
