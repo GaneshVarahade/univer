@@ -1,5 +1,7 @@
 package com.Univerclassroom.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,6 +26,22 @@ public class SchoolServicesImpl implements SchoolServices{
 	public boolean addSchool(School school) throws Exception {
 		schoolDao.addSchool(school);
 		return false;
+	}
+
+
+
+	@Override
+	public School geSchoolById(long SchoolId) throws Exception {
+		
+		return schoolDao.geSchoolById(SchoolId);
+	}
+
+
+
+	@Override
+	public List<School> getSchools() throws Exception {
+	
+		return schoolDao.getSchools();
 	}
 
 }

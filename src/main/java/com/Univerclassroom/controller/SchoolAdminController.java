@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.AdmissionResult;
 import com.Univerclassroom.model.FeeStructure;
+import com.Univerclassroom.model.School;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.StudentToParent;
 import com.Univerclassroom.DTO.AdmissionResultDTO;
@@ -31,6 +32,7 @@ import com.Univerclassroom.DTO.SchoolAdminDTO;
 import com.Univerclassroom.services.AdminServices;
 import com.Univerclassroom.services.FeeStructureServices;
 import com.Univerclassroom.services.SchoolAdminServices;
+import com.Univerclassroom.services.SchoolServices;
 
 import flexjson.JSONSerializer;
 
@@ -39,6 +41,10 @@ import flexjson.JSONSerializer;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SchoolAdminController {
 
+
+	@Autowired
+	SchoolServices schoolServices;
+	
 
 	@Autowired
 	SchoolAdminServices Schooladminservices;
@@ -78,6 +84,9 @@ public class SchoolAdminController {
 				 long adminIDD = Long.parseLong(adminId);
 				 Admin admin =  adminservices.getAdminById(adminIDD);
 				 System.out.println("id"+admin);
+	              School school =schoolServices.geSchoolById(SchooladminDTO.getSchoolId());
+	              
+	              Schooladmin.setSchool(school);
 				 Schooladmin.setAdmin(admin);
 				 Schooladminservices.addSchoolAdmin(Schooladmin);
 				 obj.put("Added", "successful");
@@ -103,15 +112,20 @@ public class SchoolAdminController {
 		
 		SchoolAdmin Schooladmin=new SchoolAdmin(SchooladminDTO);
 		
+		
 	        if( Schooladminservices.login(Schooladmin))	 
 	        { 
 	        	
-	
+	        	
 			 HttpSession sessionn = request.getSession();
 			 sessionId = sessionn.getId();
 			 map.put(sessionId, sessionId);
 			 SchoolAdmin Schooladmin1 = Schooladminservices.getSchoolAdminByUsername(Schooladmin.getUsername());
 			 obj.put("sessionId", sessionId);
+			
+			 String strI = Long.toString((Schooladmin1.getSchoolAdminId()));
+			 map.put("SchoolAdminId",strI);
+			 System.out.println("id"+strI);
 			 obj.put("login", "successful");
 	        }
 			
@@ -121,13 +135,13 @@ public class SchoolAdminController {
 			{
 				obj.put("login", "unsuccessful");
 			}
-			response.setContentType("application/json; charset=UTF-8"); 
-			
+			response.setContentType("application/json; charset=UTF-8");	
 			response.getWriter().print(new JSONSerializer().exclude("class","*.class","authorities").deepSerialize(obj));
 	}	
 	
 	@RequestMapping(value = "/getAdmissionList/", method = RequestMethod.POST, headers = "content-type=application/json")
 	public @ResponseBody
+	
 	void getAdmissionList(@RequestBody SchoolAdminDTO SchooladminDTO,HttpServletRequest request,HttpServletResponse response) throws IOException  {
 	
 		

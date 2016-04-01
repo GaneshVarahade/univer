@@ -73,7 +73,6 @@ public Admin()
 public Admin(AdminDTO adminDTO)
 {
 	this.AdminUsername=adminDTO.getAdminUsername();
-	System.out.println("in dto"+adminDTO.getAdminUsername());
 	this.AdminPassword=adminDTO.getAdminPassword();
 
 }
@@ -83,9 +82,6 @@ public Admin(AdminDTO adminDTO)
 	@OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="AdminId")
 	private Set<SchoolAdmin> Schooladmin;
-
-
-
 
 
 	public Set<SchoolAdmin> getSchooladmin() {

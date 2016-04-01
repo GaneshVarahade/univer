@@ -11,6 +11,7 @@ import com.Univerclassroom.model.StudentToParent;
 public interface SchoolAdminDao {
 	public boolean addSchoolAdmin(SchoolAdmin Schooladmin) throws Exception;
 	public boolean login(SchoolAdmin Schooladmin);
+	public SchoolAdmin getSchoolAdminById(long SchoolAdminId) throws Exception;
 	public SchoolAdmin getSchoolAdminByUsername(String username);
 	public boolean checkUsername(SchoolAdmin Schooladmin);		
     List<StudentToParent> getAdmissionList();

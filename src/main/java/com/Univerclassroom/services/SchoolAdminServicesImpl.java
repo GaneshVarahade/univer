@@ -57,5 +57,11 @@ public class SchoolAdminServicesImpl implements SchoolAdminServices {
 	public boolean addAdmissionResult(AdmissionResult ar) throws Exception {
 		return Schooladmindao.addAdmissionResult(ar);
 	}
+
+	@Override
+	public SchoolAdmin getSchoolAdminById(long SchoolAdminId) throws Exception {
+		
+		return Schooladmindao.getSchoolAdminById(SchoolAdminId);
+	}
 	
 }

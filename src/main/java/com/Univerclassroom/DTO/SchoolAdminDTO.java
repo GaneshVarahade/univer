@@ -8,6 +8,14 @@ public class SchoolAdminDTO {
 	private String  Username;		
 	private String  Password;
 	private String sessionId;
+	private long SchoolId;
+	
+	public long getSchoolId() {
+		return SchoolId;
+	}
+	public void setSchoolId(long schoolId) {
+		SchoolId = schoolId;
+	}
 	public long getSchoolAdminId() {
 		return SchoolAdminId;
 	}

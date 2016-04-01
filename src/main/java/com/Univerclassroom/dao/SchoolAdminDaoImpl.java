@@ -182,6 +182,20 @@ public class SchoolAdminDaoImpl implements SchoolAdminDao{
 		    }
 			return flag;	
 	}
+	@Override
+	public SchoolAdmin getSchoolAdminById(long SchoolAdminId) throws Exception {
+		
+		session = sessionFactory.openSession();
+		SchoolAdmin schoolAdmin = (SchoolAdmin) session.load(SchoolAdmin.class,
+				new Long(SchoolAdminId));
+		tx = session.getTransaction();
+		session.beginTransaction();
+		tx.commit();
+		session.close();
+		return schoolAdmin;	
+		
+		
+	}
 	
 	
 }

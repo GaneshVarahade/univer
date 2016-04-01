@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -27,6 +29,14 @@ public class School implements Serializable {
 	@Column(name = "SchoolId")
 	private long SchoolId;
 	
+	public SchoolAdmin getSchooladmins() {
+		return Schooladmins;
+	}
+
+	public void setSchooladmins(SchoolAdmin schooladmins) {
+		Schooladmins = schooladmins;
+	}
+
 	@Column(name = "SchoolName")
 	private String SchoolName;
 	
@@ -79,6 +89,14 @@ public class School implements Serializable {
 	@Column(name = "SchoolMedium")
 	private String SchoolMedium;
 
+	
+	
+	@OneToOne(mappedBy="school" , fetch = FetchType.EAGER)
+    private SchoolAdmin Schooladmins;
+	
+	
+	
+	
 	@ManyToOne
 	private Admin  admin;
 
@@ -109,6 +127,7 @@ public class School implements Serializable {
 		this.SchoolSize=schoolDTO.getSchoolSize();
 		this.SchoolType=schoolDTO.getSchoolType();
 		this.SchoolMedium=schoolDTO.getSchoolMedium();
+
 		
 	
 	}
