@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.Proxy;
 import org.springframework.beans.factory.annotation.Required;
@@ -47,9 +46,19 @@ public class SchoolAdmin implements Serializable{
     @JoinColumn(name="SchoolAdminId")
 	private Set<Librarian> librarian;
 
+	@OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="TeacherID")
+	private Set<Teacher> teacher;
+
 
     public School getSchool() {
 		return school;
+	}
+	public Set<Teacher> getTeacher() {
+		return teacher;
+	}
+	public void setTeacher(Set<Teacher> teacher) {
+		this.teacher = teacher;
 	}
 	public Set<Librarian> getLibrarian() {
 		return librarian;

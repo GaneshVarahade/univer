@@ -27,10 +27,12 @@ import com.Univerclassroom.model.School;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
+import com.Univerclassroom.model.Teacher;
 import com.Univerclassroom.DTO.AccountDTO;
 import com.Univerclassroom.DTO.AdmissionResultDTO;
 import com.Univerclassroom.DTO.FeeStructureDTO;
 import com.Univerclassroom.DTO.SchoolAdminDTO;
+import com.Univerclassroom.DTO.TeacherDTO;
 import com.Univerclassroom.services.AccountServices;
 import com.Univerclassroom.services.AdminServices;
 import com.Univerclassroom.services.FeeStructureServices;
@@ -443,6 +445,41 @@ public class SchoolAdminController {
 		}
 		}
 	}
+	
+	@RequestMapping(value = "/addTeacher/", method = RequestMethod.POST, headers = "content-type=application/json")
+	public @ResponseBody void addTeacher(@RequestBody TeacherDTO teacherDTO,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		SchoolAdminController sac = new SchoolAdminController();
+		HashMap<String, String> map = sac.getHashmap();
+		Object value = map.get(teacherDTO.getSessionId());
+		Map<String, Object> obj = new HashMap<String, Object>();
+		Object id = map.get("SchoolAdminId");
+		String adminId = id.toString();
+		long adminIDD = Long.parseLong(adminId);
+		SchoolAdmin schoolAdmin = Schooladminservices
+				.getSchoolAdminById(adminIDD);
+		if (value == null) {
+
+		} else {
+			if ((value.toString()).equals(teacherDTO.getSessionId())) {
+				Teacher teacher = new Teacher(teacherDTO);
+				teacher.setSchoolAdmin(schoolAdmin);
+				boolean flag = Schooladminservices.addTeacher(teacher);
+				if(flag){
+					obj.put("Teacher", "Added");
+				}else{
+					obj.put("Teacher", "Not Added");
+				}
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().print(
+						new JSONSerializer().exclude("class", "*.class",
+								"authorities").deepSerialize(obj));
+			}
+		}
+		
+	}
+	
 	
 	public HashMap<String, String> getHashmap() {
 

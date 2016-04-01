@@ -17,6 +17,7 @@ import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.AdmissionResult;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.StudentToParent;
+import com.Univerclassroom.model.Teacher;
 
 @Proxy(lazy=false)
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true) 
@@ -195,6 +196,23 @@ public class SchoolAdminDaoImpl implements SchoolAdminDao{
 		return schoolAdmin;	
 		
 		
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	@Override
+	public boolean addTeacher(Teacher teacher) throws Exception {
+		boolean flag = false;
+		 try{    
+		    	session = sessionFactory.openSession();
+				tx = session.beginTransaction();
+				session.save(teacher);
+				flag = true;
+				tx.commit();
+				session.close();
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }
+			return flag;		
 	}
 	
 	

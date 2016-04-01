@@ -12,6 +12,7 @@ import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.AdmissionResult;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.StudentToParent;
+import com.Univerclassroom.model.Teacher;
 
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true) 
 @Service("Schooladminservices")
@@ -62,6 +63,11 @@ public class SchoolAdminServicesImpl implements SchoolAdminServices {
 	public SchoolAdmin getSchoolAdminById(long SchoolAdminId) throws Exception {
 		
 		return Schooladmindao.getSchoolAdminById(SchoolAdminId);
+	}
+
+	@Override
+	public boolean addTeacher(Teacher teacher) throws Exception {
+		return Schooladmindao.addTeacher(teacher);
 	}
 	
 }

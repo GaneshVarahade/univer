@@ -35,6 +35,9 @@
 				<value>com.Univerclassroom.model.FeeStructure</value>	   
 				<value>com.Univerclassroom.model.Librarian</value>  
 				<value>com.Univerclassroom.model.Account</value>  
+				<value>com.Univerclassroom.model.Teacher</value>  
+				<value>com.Univerclassroom.model.Education</value>  
+				<value>com.Univerclassroom.model.Experience</value>  
 		  </list>
 		</property>
 		<property name="hibernateProperties">
