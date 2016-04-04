@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Univerclassroom.dao.LibrarianDao;
 import com.Univerclassroom.dao.SchoolAdminDao;
+import com.Univerclassroom.model.Book;
 import com.Univerclassroom.model.Librarian;
 
 
@@ -27,9 +28,25 @@ public class LibrarianServicesImpl implements LibrarianServices {
 	}
 
 	@Override
-	public boolean login(Librarian Schooladmin) {
+	public boolean login(Librarian librarian) {
+		return librarianDao.login(librarian);
+	}
+
+	@Override
+	public Librarian getLibrarianByUsername(String username) {	
+		return librarianDao.getLibrarianByUsername(username);
+	}
+
+	@Override
+	public Librarian getLibrarianById(long LibrarianId) throws Exception {
 		
-		return false;
+		return librarianDao.getLibrarianById(LibrarianId) ;
+	}
+
+	@Override
+	public boolean addBook(Book book) throws Exception {
+		
+		return librarianDao.addBook(book)  ;
 	}
 
 }

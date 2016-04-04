@@ -1,10 +1,15 @@
 package com.Univerclassroom.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -31,6 +36,12 @@ private String  Username;
 private String  Password;
 
 
+
+@OneToMany(cascade=CascadeType.ALL)
+@JoinColumn(name="LibrarianId")
+private Set<Book> book;
+
+
 @ManyToOne
 private SchoolAdmin  schoolAdmin;
 
@@ -44,6 +55,7 @@ public Librarian(LibrarianDTO librarianDTO)
 {
    this.Username=librarianDTO.getUsername();
    this.Password=librarianDTO.getPassword();
+  
 	
 }
 
@@ -61,6 +73,14 @@ public void setSchoolAdmin(SchoolAdmin schoolAdmin) {
 	this.schoolAdmin = schoolAdmin;
 }
 
+
+public Set<Book> getBook() {
+	return book;
+}
+
+public void setBook(Set<Book> book) {
+	this.book = book;
+}
 
 public void setLibrarianId(long librarianId) {
 	LibrarianId = librarianId;
