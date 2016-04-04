@@ -1,6 +1,9 @@
 package com.Univerclassroom.dao;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.Book;
 import com.Univerclassroom.model.Librarian;
+import com.Univerclassroom.model.School;
 
 public class LibrarianDaoImpl implements LibrarianDao  {
 
@@ -108,6 +112,17 @@ public class LibrarianDaoImpl implements LibrarianDao  {
 		    	e.printStackTrace();
 		    }
 			return flag;		
+	}
+
+	@Override
+	public List<Book> getBooks() throws Exception {
+		
+		Session session = sessionFactory.openSession();
+		String hql = "from Book";
+		Query query = session.createQuery(hql);
+		List<Book> BookList  = query.list();
+		return BookList;
+		
 	}
 
 }

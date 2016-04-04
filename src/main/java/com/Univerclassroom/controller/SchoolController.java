@@ -89,14 +89,14 @@ public class SchoolController {
 		public @ResponseBody
 		void add1(@RequestBody SchoolDTO schoolDTO,HttpServletRequest request,HttpServletResponse response) throws Exception {
 	
-		System.out.println("hello");
+		
 		Map<String,Object> obj = new HashMap<String,Object>();
 		List<Map<String,Object>> ListofSchools = new ArrayList<Map<String,Object>>();	
 		AdminController lg = new AdminController();
 		 HashMap<String, String> map = lg.getHashmap();
 		 Object value = map.get(schoolDTO.getSessionId());
 		 if(value == null){
-			// obj.put("SchoolList", "unsuccessful");
+			
 		 }else{
 		 }
 		 List<School> SchoolList =schoolServices.getSchools();

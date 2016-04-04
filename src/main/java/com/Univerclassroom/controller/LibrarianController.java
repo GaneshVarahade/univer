@@ -1,6 +1,8 @@
 package com.Univerclassroom.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Univerclassroom.DTO.LibrarianDTO;
 import com.Univerclassroom.DTO.SchoolAdminDTO;
+import com.Univerclassroom.DTO.SchoolDTO;
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.Book;
 import com.Univerclassroom.model.Librarian;
+import com.Univerclassroom.model.School;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.services.LibrarianServices;
 import com.Univerclassroom.services.SchoolAdminServices;
@@ -156,7 +160,66 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 	}
 	
 	
+	@RequestMapping(value = "/bookList/", method = RequestMethod.POST,  headers = "content-type=application/json")
+	public @ResponseBody
+	void listBooks(@RequestBody LibrarianDTO librarianDTO,HttpServletRequest request,HttpServletResponse response) throws Exception {
+
 	
+	Map<String,Object> obj = new HashMap<String,Object>();
+	List<Map<String,Object>> ListofBooks = new ArrayList<Map<String,Object>>();	
+	LibrarianController lg = new LibrarianController();
+	 HashMap<String, String> map = lg.getHashmap();
+	 Object value = map.get(librarianDTO.getSessionId());
+	 if(value == null){
+		
+	 }else{
+	 }
+	 List<Book> BookList =Librarianservices.getBooks();
+		for (Book book : BookList) {
+	   Map<String,Object> map1 = new HashMap<String, Object>();
+	   
+	   map1.put("ID", book.getUniqueIdentifier());
+	   map1.put("Author", book.getAuthor());
+	   map1.put("AuthorAddress", book.getAuthorAddress());
+	   map1.put("AuthorEmail", book.getAuthorEmail());
+	   map1.put("ISBN", book.getISBN());
+	   map1.put("Title", book.getTitle());
+	   map1.put("SpecialSectionTitle", book.getSpecialSectionTitle());
+	   map1.put("SupplementalMaterial", book.getSupplementalMaterial());
+	   map1.put("BookType", book.getBookType());
+	   map1.put("DigitalObjectIdentifier", book.getDigitalObjectIdentifier());
+	   map1.put("DocumentType", book.getDocumentType());
+	   map1.put("Language", book.getLanguage());
+	   map1.put("AudienceType", book.getAudienceType());
+	   map1.put("Location", book.getLocation());
+	   map1.put("Methodology", book.getMethodology());
+	   map1.put("PageCount", book.getPageCount());
+	   map1.put("PublicationDate", book.getPublicationDate());
+	   map1.put("PublicationType", book.getPublicationType());
+	   map1.put("PublisherName", book.getPublisherName());
+	   map1.put("ReleaseDate", book.getReleaseDate());
+	   map1.put("Source", book.getSource());
+	   
+	   
+	   
+	   
+	   ListofBooks.add(map1);
+		}
+		obj.put("SchoolList", ListofBooks);	
+		response.setContentType("application/json; charset=UTF-8"); 
+		response.getWriter().print(new JSONSerializer().exclude("class","*.class","authorities").deepSerialize(obj));
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+}
+
 	
 	
 public HashMap<String, String> getHashmap() {

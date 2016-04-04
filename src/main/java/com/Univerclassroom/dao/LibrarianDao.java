@@ -1,8 +1,11 @@
 package com.Univerclassroom.dao;
 
+import java.util.List;
+
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.Book;
 import com.Univerclassroom.model.Librarian;
+import com.Univerclassroom.model.School;
 import com.Univerclassroom.model.SchoolAdmin;
 
 public interface LibrarianDao {
@@ -11,4 +14,5 @@ public interface LibrarianDao {
 	public Librarian getLibrarianByUsername(String username);
 	public Librarian getLibrarianById(long LibrarianId) throws Exception;
 	public boolean addBook(Book book) throws Exception;
+	public List<Book> getBooks() throws Exception ;
 }

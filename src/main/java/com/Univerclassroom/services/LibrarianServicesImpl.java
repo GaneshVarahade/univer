@@ -1,5 +1,7 @@
 package com.Univerclassroom.services;
 
+import java.util.List;
+
 import org.hibernate.annotations.Proxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import com.Univerclassroom.dao.LibrarianDao;
 import com.Univerclassroom.dao.SchoolAdminDao;
 import com.Univerclassroom.model.Book;
 import com.Univerclassroom.model.Librarian;
+import com.Univerclassroom.model.School;
 
 
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true) 
@@ -48,5 +51,13 @@ public class LibrarianServicesImpl implements LibrarianServices {
 		
 		return librarianDao.addBook(book)  ;
 	}
+
+	@Override
+	public List<Book> getBooks() throws Exception {
+		
+		return librarianDao.getBooks();
+	}
+
+	
 
 }
