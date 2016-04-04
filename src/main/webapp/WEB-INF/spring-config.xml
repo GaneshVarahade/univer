@@ -84,6 +84,8 @@
 	
 	<bean id="AccountDao" class="com.Univerclassroom.dao.AccountDaoImpl"></bean>
 	<bean id="AccountServices" class="com.Univerclassroom.services.AccountServicesImpl"></bean>
-	
+		
+	<bean id="TeacherDao" class="com.Univerclassroom.dao.TeacherDaoImpl"></bean>
+	<bean id="TeacherServices" class="com.Univerclassroom.services.TeacherServicesImpl"></bean>
 </beans>
 

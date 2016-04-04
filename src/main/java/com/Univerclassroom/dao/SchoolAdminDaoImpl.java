@@ -205,7 +205,7 @@ public class SchoolAdminDaoImpl implements SchoolAdminDao{
 		 try{    
 		    	session = sessionFactory.openSession();
 				tx = session.beginTransaction();
-				session.save(teacher);
+				session.saveOrUpdate(teacher); 
 				flag = true;
 				tx.commit();
 				session.close();
