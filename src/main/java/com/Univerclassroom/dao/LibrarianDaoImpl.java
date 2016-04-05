@@ -114,13 +114,34 @@ public class LibrarianDaoImpl implements LibrarianDao  {
 			return flag;		
 	}
 
+	
 	@Override
-	public List<Book> getBooks() throws Exception {
+	public List<Book> getBookListByTitle(String Title,Long LibrarianId) throws Exception {
 		
 		Session session = sessionFactory.openSession();
-		String hql = "from Book";
-		Query query = session.createQuery(hql);
-		List<Book> BookList  = query.list();
+		Criteria cr = session.createCriteria(Book.class);
+		cr.createAlias("librarian", "lib");
+		cr.add(Restrictions.eq("lib.LibrarianId", LibrarianId));
+		cr.add(Restrictions.eq("Title", Title));
+		List<Book> BookList  = cr.list();
+		for (Book book : BookList) {
+			System.out.println("in impl book : "+ book.getAuthor());
+			
+		}
+		return BookList;
+	}
+
+	@Override
+	public List<Book> getBookListByLibId(Long LibrarianId) throws Exception {
+			
+		Session session = sessionFactory.openSession();
+		tx = session.beginTransaction();
+		Criteria c = session.createCriteria(Book.class);
+		c.createAlias("librarian", "lib");
+		c.add(Restrictions.eq("lib.LibrarianId", LibrarianId));
+		List<Book> BookList  = c.list();
+		tx.commit();
+		session.close();
 		return BookList;
 		
 	}

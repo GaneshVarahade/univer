@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -47,6 +48,18 @@ public class Student implements Serializable{
 	private String RollNo;
 	private String StudentUsername;
 	private String StudentPassword;
+	
+	@ManyToOne
+	private SchoolAdmin  Schooladmin;
+
+	public SchoolAdmin getSchooladmin() {
+		return Schooladmin;
+	}
+
+	public void setSchooladmin(SchoolAdmin schooladmin) {
+		Schooladmin = schooladmin;
+	}
+
 	public String getRollNo() {
 		return RollNo;
 	}

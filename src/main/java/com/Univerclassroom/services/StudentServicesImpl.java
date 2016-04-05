@@ -1,5 +1,7 @@
 package com.Univerclassroom.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -45,6 +47,12 @@ public class StudentServicesImpl implements StudentServices{
 	@Override
 	public boolean checkUsername(String username) {
 		return studentDao.checkUsername(username);
+	}
+
+	@Override
+	public List<Student> getStudents() throws Exception {
+	
+		return studentDao.getStudents();
 	}
  
 }

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
 import com.Univerclassroom.model.Admin;
+import com.Univerclassroom.model.Book;
 import com.Univerclassroom.model.FeeStructure;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
@@ -146,6 +147,21 @@ public class StudentDaoImpl implements StudentDao{
 		    	e.printStackTrace();
 		    }
 			return flag;
+		
+	}
+
+	@Override
+	public List<Student> getStudents() throws Exception {
+		
+	
+		Session session = sessionFactory.openSession();
+		String hql = "from Student";
+		Query query = session.createQuery(hql);
+		List<Student> StudentList  = query.list();
+		return StudentList;
+		
+		
+		
 		
 	}
 

@@ -104,7 +104,6 @@ public class SchoolAdminController {
 					String adminId = id.toString();
 					long adminIDD = Long.parseLong(adminId);
 					Admin admin = adminservices.getAdminById(adminIDD);
-					System.out.println("id" + admin);
 					School school = schoolServices.geSchoolById(SchooladminDTO
 							.getSchoolId());
 
@@ -381,6 +380,8 @@ public class SchoolAdminController {
 									.getStudentUsername());
 							student.setStudentPassword(accountDTO
 									.getStudentPassword());
+								student.setSchooladmin(schoolAdmin);								student.setSchooladmin(schoolAdmin);
+
 							String studeEmail = student.getStudentEmailId();
 							String msg = "your admission is confirmed. Credentials are below:\n"+"Roll No:"+student.getRollNo() +"\nUsername: "+student.getStudentUsername() +"\nPassword: "+student.getStudentPassword();
 							String header = "About Admission Confirmation";

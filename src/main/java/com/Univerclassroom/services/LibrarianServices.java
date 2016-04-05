@@ -16,5 +16,6 @@ public Librarian getLibrarianByUsername(String username);
 	public Librarian getLibrarianById(long LibrarianId) throws Exception;
 	public boolean addBook(Book book) throws Exception;
 	public List<Book> getBooks() throws Exception ;
-	
+	public List<Book> getBookListByTitle(String Title,Long LibrarianId) throws Exception;
+	public List<Book> getBookListByLibId(Long LibrarianId) throws Exception ;
 }

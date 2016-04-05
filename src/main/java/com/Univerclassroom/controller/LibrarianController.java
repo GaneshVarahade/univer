@@ -169,12 +169,17 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 	List<Map<String,Object>> ListofBooks = new ArrayList<Map<String,Object>>();	
 	LibrarianController lg = new LibrarianController();
 	 HashMap<String, String> map = lg.getHashmap();
+	 Object value1= map.get("LibrarianId");
+	 
 	 Object value = map.get(librarianDTO.getSessionId());
 	 if(value == null){
-		
+		 
 	 }else{
-	 }
-	 List<Book> BookList =Librarianservices.getBooks();
+	 } 
+	 String LibrarianId = value1.toString();
+	  long LibrarianId1 = Long.parseLong(LibrarianId);
+	  System.out.println("id"+LibrarianId1);
+	 List<Book> BookList =Librarianservices.getBookListByLibId(LibrarianId1);
 		for (Book book : BookList) {
 	   Map<String,Object> map1 = new HashMap<String, Object>();
 	   
@@ -205,7 +210,7 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 	   
 	   ListofBooks.add(map1);
 		}
-		obj.put("SchoolList", ListofBooks);	
+		obj.put("BookList", ListofBooks);	
 		response.setContentType("application/json; charset=UTF-8"); 
 		response.getWriter().print(new JSONSerializer().exclude("class","*.class","authorities").deepSerialize(obj));
 	   
@@ -220,7 +225,52 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 	   
 }
 
-	
+	@RequestMapping(value = "/bookSearch/", method = RequestMethod.POST,  headers = "content-type=application/json")
+	void searchBooks(@RequestBody LibrarianDTO librarianDTO,HttpServletRequest request,HttpServletResponse response) throws Exception {
+
+		
+		Map<String,Object> obj = new HashMap<String,Object>();
+		List<Map<String,Object>> ListofBooks = new ArrayList<Map<String,Object>>();	
+		LibrarianController lg = new LibrarianController();
+		 HashMap<String, String> map = lg.getHashmap();
+		 Object value = map.get(librarianDTO.getSessionId());
+		 Object value1=librarianDTO.getTitle();
+		
+		 Object value2= map.get("LibrarianId");
+		if (value == null || value1 == null) {
+			obj.put("Added", "unsuccessful");
+		} else {
+			if ((value.toString()).equals(librarianDTO.getSessionId())) {
+				
+				
+				 String LibrarianId = value2.toString();
+				  long LibrarianId1 = Long.parseLong(LibrarianId);
+		 List<Book> BookList =Librarianservices.getBookListByTitle(librarianDTO.getTitle(), LibrarianId1);
+		 
+		 
+			for(Book book : BookList) {				
+		   Map<String,Object> map1 = new HashMap<String, Object>();
+		   
+		   map1.put("ID", book.getUniqueIdentifier());
+		   map1.put("Author", book.getAuthor());
+		   map1.put("ISBN", book.getISBN()); 
+		   map1.put("PageCount", book.getPageCount());
+		   map1.put("PublicationDate", book.getPublicationDate());
+		  
+			
+		   
+		   
+		   ListofBooks.add(map1);
+			}
+			
+			obj.put("BookList", ListofBooks);	
+		 }
+		}
+			response.setContentType("application/json; charset=UTF-8"); 
+			response.getWriter().print(new JSONSerializer().exclude("class","*.class","authorities").deepSerialize(obj));
+		   
+		   
+	}
 	
 public HashMap<String, String> getHashmap() {
 	    

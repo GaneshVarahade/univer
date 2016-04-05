@@ -52,10 +52,28 @@ public class LibrarianServicesImpl implements LibrarianServices {
 		return librarianDao.addBook(book)  ;
 	}
 
+	
+
+
+
 	@Override
 	public List<Book> getBooks() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Book> getBookListByLibId(Long LibrarianId) throws Exception {
 		
-		return librarianDao.getBooks();
+		return librarianDao.getBookListByLibId(LibrarianId);
+	}
+
+	@Override
+	public List<Book> getBookListByTitle(String Title, Long LibrarianId)
+			throws Exception {
+		return librarianDao.getBookListByTitle(Title, LibrarianId);
+		
+		
 	}
 
 	

@@ -22,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
+import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.Parent;
+import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
 import com.Univerclassroom.services.ParentServices;
+import com.Univerclassroom.services.SchoolAdminServices;
 import com.Univerclassroom.services.StudentServices;
 
 import flexjson.JSONSerializer;
@@ -42,28 +45,34 @@ public class UserController {
 	@Autowired
 	StudentServices studentServices;
 
+	@Autowired
+	SchoolAdminServices Schooladminservices;
 
-	public static HashMap<String, String> userMap = new HashMap<String, String>();
 	
+	public static HashMap<String, String> map = new HashMap<String, String>();
 	@RequestMapping(value = "/admission/", method = RequestMethod.POST,  headers = "content-type=application/json")
 	public @ResponseBody
 	void add(@RequestBody StudentAdmissionDTO admission,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		Map<String,Object> obj = new HashMap<String,Object>();
 		
-		
+	         
 		
 		
 			Student student = new Student(admission);
 			boolean isStudentUnique = studentServices.checkStudentUnique(student);
 			if(isStudentUnique){
+				
+				
 				boolean isStudentSave = studentServices.addOrUpdateStudent(student);
 				Parent parent = new Parent(admission);
 				boolean isParentSave = parentServices.addOrUpdateParent(parent);
 				Student studObj = studentServices.getStudent(admission);
 				Parent parentObj = parentServices.getParent(admission);
+				
 				StudentToParent stp = new StudentToParent();
 				stp.setParent(parentObj);
 				stp.setStudent(studObj);
+			
 				boolean isSADSave = studentServices.addOrUpdateStudentToParent(stp);
 				if(isStudentSave && isParentSave && isSADSave){
 					obj.put("admission", "form submitted");
@@ -78,9 +87,4 @@ public class UserController {
 			}
 	
 	
-	public HashMap<String, String> getUsermap() {
-	    
-	    return userMap;
-	}
-
 }

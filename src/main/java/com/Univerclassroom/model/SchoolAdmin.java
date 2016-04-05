@@ -75,7 +75,20 @@ public class SchoolAdmin implements Serializable{
     
 
     
-			@ManyToOne
+@OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="SchoolAdminId")
+	private Set<Student> student;
+
+	
+    
+			public Set<Student> getStudent() {
+		return student;
+	}
+	public void setStudent(Set<Student> student) {
+		this.student = student;
+	}			
+	
+	@ManyToOne
 	private Admin  admin;
 
 	public SchoolAdmin(){
