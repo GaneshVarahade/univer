@@ -84,16 +84,23 @@ public class TeacherController {
 		String teacherId = id.toString();
 		long teacherIDD = Long.parseLong(teacherId);
 		Teacher teacher = teacherServices.getTeacherById(teacherIDD);
-				
+		boolean isUnique = false;	
 		if (value == null) {
 
 		} else {
 			if ((value.toString()).equals(teacherDTO.getSessionId())) {
+				if(teacherDTO.getTeacherUsername() != null && !teacherDTO.getTeacherUsername().isEmpty()){
+					 isUnique = teacherServices.checkUsername(teacherDTO.getTeacherUsername());
+				}else{
+					isUnique = true;
+				}
+				if(isUnique){
 				teacherServices.updateTeacherField(teacherDTO, teacher);
 				boolean flag = Schooladminservices.addTeacher(teacher);
 				if(flag){
 					obj.put("teacher", "updated");
-			}
+					}
+				}
 
 			else {
 				obj.put("teacher", "not updated");

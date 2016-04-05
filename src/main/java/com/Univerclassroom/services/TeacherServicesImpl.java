@@ -1,5 +1,7 @@
 package com.Univerclassroom.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -36,6 +38,16 @@ public class TeacherServicesImpl implements TeacherServices {
 	public void updateTeacherField(TeacherDTO tDTO, Teacher t) {
 		teacherDao.updateTeacherField(tDTO, t);
 		
+	}
+
+	@Override
+	public boolean checkUsername(String username) {
+		return teacherDao.checkUsername(username);
+	}
+
+	@Override
+	public List<Teacher> getTeacherListById(long id) {
+		return teacherDao.getTeacherListById(id);
 	}
 
 }

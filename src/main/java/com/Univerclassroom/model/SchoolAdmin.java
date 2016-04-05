@@ -47,7 +47,7 @@ public class SchoolAdmin implements Serializable{
 	private Set<Librarian> librarian;
 
 	@OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="TeacherID")
+    @JoinColumn(name="SchoolAdminId")
 	private Set<Teacher> teacher;
 
 

@@ -1,5 +1,6 @@
 package com.Univerclassroom.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Criteria;
@@ -12,8 +13,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Univerclassroom.DTO.TeacherDTO;
+import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.Education;
 import com.Univerclassroom.model.Experience;
+import com.Univerclassroom.model.Parent;
 import com.Univerclassroom.model.Teacher;
 
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true) 
@@ -117,6 +120,44 @@ public class TeacherDaoImpl implements TeacherDao{
 			t.setTeacherPassword(dto.getTeacherPassword()); 
 		if(dto.getTeacherUsername() != null && !dto.getTeacherUsername().isEmpty())
 			t.setTeacherPassword(dto.getTeacherUsername()); 
+	}
+
+	@Override
+	public boolean checkUsername(String username) {
+		boolean flag=false;
+		Teacher teacher = null;
+		    try{  	
+		    session = sessionFactory.openSession();
+			Criteria c = session.createCriteria(Teacher.class);
+			c.add(Restrictions.eq("teacherUsername", username));
+			Object o = c.uniqueResult();
+			teacher = (Teacher)o;
+			if(o==null)
+			{
+				flag=true;
+			}
+			
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }
+			return flag;
+	}
+
+	@Override
+	public List<Teacher> getTeacherListById(long id) {
+		session = sessionFactory.openSession();
+		tx = session.beginTransaction();
+		
+		Criteria c = session.createCriteria(Teacher.class);
+		c.createAlias("schoolAdmin", "sadmin");
+		c.add(Restrictions.eq("sadmin.SchoolAdminId", id));
+		List<Teacher> adminList = c.list();
+		for (Teacher teacher : adminList) {
+			System.out.println(teacher.getTeacherFirstName());
+		}
+		tx.commit();
+		session.close();
+		return adminList;
 	}
 
 }

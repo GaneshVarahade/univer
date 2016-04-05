@@ -7,6 +7,7 @@ import com.Univerclassroom.model.Experience;
 
 public class TeacherDTO {
 
+	private String action;
 	private String sessionId;
 	private String teacherFirstName;
 	private String teacherLastName;
@@ -108,5 +109,11 @@ public class TeacherDTO {
 	}
 	public void setTeacherPassword(String teacherPassword) {
 		this.teacherPassword = teacherPassword;
+	}
+	public String getAction() {
+		return action;
+	}
+	public void setAction(String action) {
+		this.action = action;
 	}
 }

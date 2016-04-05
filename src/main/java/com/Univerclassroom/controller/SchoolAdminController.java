@@ -36,10 +36,12 @@ import com.Univerclassroom.DTO.TeacherDTO;
 import com.Univerclassroom.services.AccountServices;
 import com.Univerclassroom.services.AdminServices;
 import com.Univerclassroom.services.FeeStructureServices;
+import com.Univerclassroom.services.Mailer;
 import com.Univerclassroom.services.ParentServices;
 import com.Univerclassroom.services.SchoolAdminServices;
 import com.Univerclassroom.services.SchoolServices;
 import com.Univerclassroom.services.StudentServices;
+import com.Univerclassroom.services.TeacherServices;
 
 import flexjson.JSONSerializer;
 
@@ -69,6 +71,9 @@ public class SchoolAdminController {
 	@Autowired
 	ParentServices parentServices;
 
+	@Autowired
+	TeacherServices teacherServices;
+	
 	public static HashMap<String, String> map = new HashMap<String, String>();
 
 	public static HashMap<String, String> userMap = new HashMap<String, String>();
@@ -214,6 +219,12 @@ public class SchoolAdminController {
 				ar.setStp(stp);
 				boolean flag = Schooladminservices.addAdmissionResult(ar);
 				if (flag) {
+					String parentEmail = stp.getParent().getParentEmailId();
+					String msg = "your child is eligible for admission.Rank is "+ ar.getRank() + "and mark is " + ar.getMark();
+					String header = "About Admission Eligibility";
+					 String[] args = {parentEmail,msg,header};
+					 Mailer.main(args);
+					
 					obj.put("Admission Result", "added");
 				} else {
 					obj.put("Admission Result", "Not added");
@@ -370,12 +381,22 @@ public class SchoolAdminController {
 									.getStudentUsername());
 							student.setStudentPassword(accountDTO
 									.getStudentPassword());
+							String studeEmail = student.getStudentEmailId();
+							String msg = "your admission is confirmed. Credentials are below:\n"+"Roll No:"+student.getRollNo() +"\nUsername: "+student.getStudentUsername() +"\nPassword: "+student.getStudentPassword();
+							String header = "About Admission Confirmation";
+							 String[] args = {studeEmail,msg,header};
+							 Mailer.main(args);
 							studentServices.addOrUpdateStudent(student);
 							Parent parent = stp.getParent();
 							parent.setParentUsername(accountDTO
 									.getParentUsername());
 							parent.setParentPassword(accountDTO
 									.getParentPassword());
+							String parentEmail = parent.getParentEmailId();
+							String parentmsg = "your child's admission is confirmed. Credentials are below:\n" +"\nUsername: "+parent.getParentUsername() +"\nPassword: "+parent.getParentPassword();
+							String parentheader = "About Admission Confirmation";
+							 String[] argss = {parentEmail,parentmsg,parentheader};
+							 Mailer.main(argss);
 							parentServices.addOrUpdateParent(parent);
 						}
 					}
@@ -446,7 +467,7 @@ public class SchoolAdminController {
 		}
 	}
 	
-	@RequestMapping(value = "/addTeacher/", method = RequestMethod.POST, headers = "content-type=application/json")
+	@RequestMapping(value = "/Teacher/", method = RequestMethod.POST, headers = "content-type=application/json")
 	public @ResponseBody void addTeacher(@RequestBody TeacherDTO teacherDTO,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -459,15 +480,21 @@ public class SchoolAdminController {
 		long adminIDD = Long.parseLong(adminId);
 		SchoolAdmin schoolAdmin = Schooladminservices
 				.getSchoolAdminById(adminIDD);
+		boolean isUnique = false;
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		if (value == null) {
 
 		} else {
 			if ((value.toString()).equals(teacherDTO.getSessionId())) {
+				if (teacherDTO.getAction().equals("add")){
 				Teacher teacher = new Teacher(teacherDTO);
+				isUnique = teacherServices.checkUsername(teacherDTO.getTeacherUsername());
+				if(isUnique){
 				teacher.setSchoolAdmin(schoolAdmin);
 				boolean flag = Schooladminservices.addTeacher(teacher);
 				if(flag){
 					obj.put("Teacher", "Added");
+				}
 				}else{
 					obj.put("Teacher", "Not Added");
 				}
@@ -475,6 +502,28 @@ public class SchoolAdminController {
 				response.getWriter().print(
 						new JSONSerializer().exclude("class", "*.class",
 								"authorities").deepSerialize(obj));
+				}
+				if (teacherDTO.getAction().equals("list")){
+					//get list of teacher by school admin id
+					List<Teacher> teacherList = teacherServices.getTeacherListById(adminIDD);
+					int k = 0;
+					for (Teacher teacher : teacherList) {
+						/*HashMap<String, Object> object = new HashMap<String, Object>();
+						object.put("teacherFirstName", teacher.getTeacherFirstName());
+						object.put("teacherLastName", teacher.getTeacherLastName());
+						object.put("Id", teacher.getId());
+						object.put("mobileNo", teacher.getMobileNo());
+						object.put("address", teacher.getAddress());
+						object.put("emailId", teacher.getEmailId());
+						list.add(object);*/
+						k++;
+						System.out.println("K:"+k);
+					}
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().print(
+							new JSONSerializer().exclude("class", "*.class",
+									"authorities").deepSerialize(list));
+				}
 			}
 		}
 		

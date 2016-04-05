@@ -15,13 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.DTO.AdminDTO;
 import com.Univerclassroom.model.SchoolAdmin;
-
 import com.Univerclassroom.services.AdminServices;
-
+import com.Univerclassroom.services.Mailer;
 
 import flexjson.JSONSerializer;
 
