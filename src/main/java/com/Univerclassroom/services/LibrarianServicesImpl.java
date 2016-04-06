@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.Univerclassroom.dao.LibrarianDao;
 import com.Univerclassroom.dao.SchoolAdminDao;
 import com.Univerclassroom.model.Book;
+import com.Univerclassroom.model.BookIssue;
 import com.Univerclassroom.model.Librarian;
 import com.Univerclassroom.model.School;
 
@@ -76,6 +77,12 @@ public class LibrarianServicesImpl implements LibrarianServices {
 	public Book getBookById(long UniqueIdentifier) throws Exception {
 		
 		return librarianDao.getBookById(UniqueIdentifier);
+	}
+
+	@Override
+	public boolean addBookIssue(BookIssue bookIssue) {
+		
+		return librarianDao.addBookIssue(bookIssue);
 	}
 
 	

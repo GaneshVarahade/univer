@@ -25,14 +25,6 @@ import com.Univerclassroom.services.TeacherServices;
 @Proxy(lazy=false)
 public class BookIssue {
 
-	@Autowired
-	TeacherServices teacherServices;
-	
-	@Autowired
-	StudentServices studentServices;
-	
-	@Autowired
-	LibrarianServices Librarianservices;
 	
 	@Id
 	@GeneratedValue
@@ -45,26 +37,16 @@ public class BookIssue {
 	private Student student;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "Id", insertable = true, updatable = true, nullable = true, unique = true)
+	@JoinColumn(name = "TeacherId", insertable = true, updatable = true, nullable = true, unique = true)
 	private Teacher teacher;
 
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "UniqueIdentifier;", insertable = true, updatable = true, nullable = true, unique = true)
+	@JoinColumn(name = "UniqueIdentifier", insertable = true, updatable = true, nullable = true, unique = true)
 	private Book book;
 
-	public BookIssue(){
-		
-	}
 	
 	
-	public BookIssue(BookIssueDTO bookIssueDTO) throws Exception{
-	this.teacher=teacherServices.getTeacherById(bookIssueDTO.getTeacherId());
-	this.student=studentServices.getStudentById(bookIssueDTO.getStudentId());
-	this.book=Librarianservices.getBookById(bookIssueDTO.getUniqueIdentifier());
-		
-		
-	}
 	public Book getBook() {
 		return book;
 	}

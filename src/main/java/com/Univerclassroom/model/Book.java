@@ -18,6 +18,7 @@ import com.Univerclassroom.DTO.LibrarianDTO;
 @Entity
 @Table(name = "Books")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Proxy(lazy=false)
 public class Book implements Serializable{
 
 	@Id
@@ -88,9 +89,19 @@ public class Book implements Serializable{
 	@Column(name= "ReleaseDate")
 	private String  ReleaseDate;
 
+	@Column(name= "issued")
+	private boolean issued;
 	
 	
 	
+	public boolean isIssued() {
+		return issued;
+	}
+
+	public void setIssued(boolean issued) {
+		this.issued = issued;
+	}
+
 	public Book(){
 	
 	}

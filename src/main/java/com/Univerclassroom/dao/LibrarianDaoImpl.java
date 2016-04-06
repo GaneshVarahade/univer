@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.Book;
+import com.Univerclassroom.model.BookIssue;
 import com.Univerclassroom.model.Librarian;
 import com.Univerclassroom.model.School;
 
@@ -123,11 +124,9 @@ public class LibrarianDaoImpl implements LibrarianDao  {
 		cr.createAlias("librarian", "lib");
 		cr.add(Restrictions.eq("lib.LibrarianId", LibrarianId));
 		cr.add(Restrictions.eq("Title", Title));
+		cr.add(Restrictions.eq("issued", false));
 		List<Book> BookList  = cr.list();
-		for (Book book : BookList) {
-			System.out.println("in impl book : "+ book.getAuthor());
-			
-		}
+		
 		return BookList;
 	}
 
@@ -139,6 +138,7 @@ public class LibrarianDaoImpl implements LibrarianDao  {
 		Criteria c = session.createCriteria(Book.class);
 		c.createAlias("librarian", "lib");
 		c.add(Restrictions.eq("lib.LibrarianId", LibrarianId));
+		c.add(Restrictions.eq("issued", false));
 		List<Book> BookList  = c.list();
 		tx.commit();
 		session.close();
@@ -157,6 +157,27 @@ public class LibrarianDaoImpl implements LibrarianDao  {
 		tx.commit();
 		session.close();
 		return book;	
+		
+	}
+
+	@Override
+	public boolean addBookIssue(BookIssue bookIssue) {
+		
+		boolean flag = false;
+		 try{    
+		    	session = sessionFactory.openSession();
+				tx = session.beginTransaction();
+				session.save(bookIssue);
+				flag = true;
+				tx.commit();
+				session.close();
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }
+			return flag;		
+		
+		
+		
 		
 	}
 

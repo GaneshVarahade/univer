@@ -15,5 +15,5 @@ public interface TeacherServices {
 	boolean checkUsername(String username);	
 	List<Teacher> getTeacherListById(long id);
 	boolean deleteTeacher(long id);
-	public Student getStudentById(long StudentId) throws Exception;
+	
 }

@@ -17,18 +17,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.Univerclassroom.DTO.BookIssueDTO;
 import com.Univerclassroom.DTO.LibrarianDTO;
 import com.Univerclassroom.DTO.SchoolAdminDTO;
 import com.Univerclassroom.DTO.SchoolDTO;
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.Book;
+import com.Univerclassroom.model.BookIssue;
 import com.Univerclassroom.model.Librarian;
 import com.Univerclassroom.model.School;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.Student;
+import com.Univerclassroom.model.Teacher;
 import com.Univerclassroom.services.LibrarianServices;
 import com.Univerclassroom.services.SchoolAdminServices;
 import com.Univerclassroom.services.StudentServices;
+import com.Univerclassroom.services.TeacherServices;
 
 import flexjson.JSONSerializer;
 
@@ -47,6 +51,9 @@ public class LibrarianController {
 	
 	@Autowired
 	StudentServices studentServices;
+	
+	@Autowired
+	TeacherServices teacherServices;
 	
 	
 public static HashMap<String, String> map = new HashMap<String, String>();
@@ -307,6 +314,56 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 		}
 		
 	}
+	
+	
+	
+	
+	@RequestMapping(value = "/bookIssue/", method = RequestMethod.POST,  headers = "content-type=application/json")
+	public @ResponseBody
+	void issuebook(@RequestBody BookIssueDTO bookIssueDTO,HttpServletRequest request,HttpServletResponse response) throws Exception {
+		
+		Map<String,Object> obj = new HashMap<String,Object>();
+		 
+		 
+     	LibrarianController lg = new LibrarianController();
+		 HashMap<String, String> map = lg.getHashmap();
+		 Object value = map.get(bookIssueDTO.getSessionId());
+		 Object id = map.get("LibrarianId");		 
+		 Teacher teacher = null;
+		 Student student = null;
+		 boolean flag = false;
+		 if(value == null){
+		      obj.put("Added", "unsuccessful");
+		 } else{
+				if ((value.toString()).equals(bookIssueDTO.getSessionId())) {
+					if(bookIssueDTO.getStudentId() == 0 ){
+						teacher = teacherServices.getTeacherById(bookIssueDTO.getTeacherId());
+						flag = true;
+					}else{
+						student = studentServices.getStudentById(bookIssueDTO.getStudentId());
+					}
+				
+					Book book = Librarianservices.getBookById(bookIssueDTO.getUniqueIdentifier());
+					book.setIssued(true);
+					BookIssue bookIssue = new BookIssue();
+					bookIssue.setBook(book);
+					bookIssue.setTeacher(teacher);
+					bookIssue.setStudent(student);
+					boolean isadded = Librarianservices.addBookIssue(bookIssue);
+					if(isadded){
+						obj.put("BookIssued","Successfully");
+					}else{
+						obj.put("BookIssued","Unuccessfully");
+					}
+					
+				}
+		 }
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().print(
+					new JSONSerializer().exclude("class", "*.class",
+							"authorities").deepSerialize(obj));
+	}
+	
 	
 public HashMap<String, String> getHashmap() {
 	    
