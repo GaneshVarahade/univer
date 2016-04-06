@@ -19,7 +19,7 @@ public interface StudentDao {
 	boolean checkStudentUnique(Student student);
 	public boolean checkRollNo(String  rollNo);
 	public boolean checkUsername(String username);	
-	public List<Student> getStudents() throws Exception ;
+	public List<Student> getStudentListBySchoolAdminId(long scoolAdminId) throws Exception ;
 	
 	
 }

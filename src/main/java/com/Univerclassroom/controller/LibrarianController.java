@@ -25,8 +25,10 @@ import com.Univerclassroom.model.Book;
 import com.Univerclassroom.model.Librarian;
 import com.Univerclassroom.model.School;
 import com.Univerclassroom.model.SchoolAdmin;
+import com.Univerclassroom.model.Student;
 import com.Univerclassroom.services.LibrarianServices;
 import com.Univerclassroom.services.SchoolAdminServices;
+import com.Univerclassroom.services.StudentServices;
 
 import flexjson.JSONSerializer;
 
@@ -40,10 +42,11 @@ public class LibrarianController {
 	@Autowired
 	SchoolAdminServices Schooladminservices;
 	
-	
-	
 	@Autowired
 	LibrarianServices Librarianservices;
+	
+	@Autowired
+	StudentServices studentServices;
 	
 	
 public static HashMap<String, String> map = new HashMap<String, String>();
@@ -63,6 +66,7 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 		 if(value == null){
 		      obj.put("Added", "unsuccessful");
 		 } else{
+				if ((value.toString()).equals(librarianDTO.getSessionId())) {
 		      String SchoolAdminId = id.toString();
 			  long SchoolAdminId1 = Long.parseLong(SchoolAdminId);
 			  
@@ -71,7 +75,7 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 			 librarian.setSchoolAdmin(schoolAdmin);
 			  Librarianservices.addLibrarian(librarian);
 			 obj.put("Added", "successful");
-			 
+				}
 		      }
 
 		  response.setContentType("application/json; charset=UTF-8"); 
@@ -140,6 +144,7 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 		 if(value == null){
 		      obj.put("BookAdded", "unsuccessful");
 		 } else{
+			 if ((value.toString()).equals(librarianDTO.getSessionId())) {
 		      String LibrarianId = id.toString();
 			  long LibrarianId1 = Long.parseLong(LibrarianId);
 			  
@@ -149,7 +154,7 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 			   book.setLibrarian(librarian);
 			  Librarianservices.addBook(book);
 			 obj.put("BookAdded", "successful");
-			 
+			 }
 		      }
 
 		  response.setContentType("application/json; charset=UTF-8"); 
@@ -176,6 +181,7 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 		 
 	 }else{
 	 } 
+	 if ((value.toString()).equals(librarianDTO.getSessionId())) {
 	 String LibrarianId = value1.toString();
 	  long LibrarianId1 = Long.parseLong(LibrarianId);
 	  System.out.println("id"+LibrarianId1);
@@ -211,18 +217,9 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 	   ListofBooks.add(map1);
 		}
 		obj.put("BookList", ListofBooks);	
+	 }
 		response.setContentType("application/json; charset=UTF-8"); 
 		response.getWriter().print(new JSONSerializer().exclude("class","*.class","authorities").deepSerialize(obj));
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
 }
 
 	@RequestMapping(value = "/bookSearch/", method = RequestMethod.POST,  headers = "content-type=application/json")
@@ -270,6 +267,45 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 			response.getWriter().print(new JSONSerializer().exclude("class","*.class","authorities").deepSerialize(obj));
 		   
 		   
+	}
+	
+
+	@RequestMapping(value = "/studentList/", method = RequestMethod.POST,  headers = "content-type=application/json")
+	void StudentList(@RequestBody LibrarianDTO librarianDTO,HttpServletRequest request,HttpServletResponse response) throws Exception {
+		Map<String,Object> obj = new HashMap<String,Object>();
+		LibrarianController lg = new LibrarianController();
+		 HashMap<String, String> map = lg.getHashmap();
+		 Object value = map.get(librarianDTO.getSessionId());
+		 
+			List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		 Object value2= map.get("LibrarianId");
+		if (value == null ) {
+			obj.put("Added", "unsuccessful");
+		} else {
+			if ((value.toString()).equals(librarianDTO.getSessionId())) {
+				
+				
+				 String LibrarianId = value2.toString();
+				  long LibrarianId1 = Long.parseLong(LibrarianId);
+				  Librarian lib = Librarianservices.getLibrarianById(LibrarianId1);
+				  SchoolAdmin schoolAdmin = lib.getSchoolAdmin();
+				  List<Student> studentList = studentServices.getStudentListBySchoolAdminId(schoolAdmin.getSchoolAdminId());
+				  for (Student student : studentList) {
+						HashMap<String, Object> object = new HashMap<String, Object>();
+						object.put("StudentFirstName", student.getStudentFirstName());
+						object.put("StudentLastName", student.getStudentLastName());
+						object.put("Id", student.getStudentId());
+						object.put("RollNo", student.getRollNo());
+						object.put("emailId", student.getStudentEmailId());
+						list.add(object);
+					}
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().print(
+							new JSONSerializer().exclude("class", "*.class",
+									"authorities").deepSerialize(list));
+			}
+		}
+		
 	}
 	
 public HashMap<String, String> getHashmap() {

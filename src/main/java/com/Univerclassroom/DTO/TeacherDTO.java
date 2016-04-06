@@ -7,6 +7,7 @@ import com.Univerclassroom.model.Experience;
 
 public class TeacherDTO {
 
+	private long teacherId;
 	private String action;
 	private String sessionId;
 	private String teacherFirstName;
@@ -115,5 +116,11 @@ public class TeacherDTO {
 	}
 	public void setAction(String action) {
 		this.action = action;
+	}
+	public long getTeacherId() {
+		return teacherId;
+	}
+	public void setTeacherId(long teacherId) {
+		this.teacherId = teacherId;
 	}
 }

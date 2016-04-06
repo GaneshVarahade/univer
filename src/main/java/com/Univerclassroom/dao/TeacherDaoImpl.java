@@ -160,4 +160,15 @@ public class TeacherDaoImpl implements TeacherDao{
 		return adminList;
 	}
 
+	@Override
+	public boolean deleteTeacher(long id) {
+		session = sessionFactory.openSession();
+		Object o = session.load(Teacher.class, id);
+		tx = session.getTransaction();
+		session.beginTransaction();
+		session.delete(o);
+		tx.commit();
+		return true;
+	}
+
 }

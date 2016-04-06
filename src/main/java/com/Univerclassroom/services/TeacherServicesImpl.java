@@ -50,4 +50,9 @@ public class TeacherServicesImpl implements TeacherServices {
 		return teacherDao.getTeacherListById(id);
 	}
 
+	@Override
+	public boolean deleteTeacher(long id) {
+		return teacherDao.deleteTeacher(id);
+	}
+
 }

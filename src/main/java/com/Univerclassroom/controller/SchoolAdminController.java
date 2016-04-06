@@ -32,6 +32,7 @@ import com.Univerclassroom.DTO.AccountDTO;
 import com.Univerclassroom.DTO.AdmissionResultDTO;
 import com.Univerclassroom.DTO.FeeStructureDTO;
 import com.Univerclassroom.DTO.SchoolAdminDTO;
+import com.Univerclassroom.DTO.StudentDTO;
 import com.Univerclassroom.DTO.TeacherDTO;
 import com.Univerclassroom.services.AccountServices;
 import com.Univerclassroom.services.AdminServices;
@@ -509,16 +510,67 @@ public class SchoolAdminController {
 					List<Teacher> teacherList = teacherServices.getTeacherListById(adminIDD);
 					int k = 0;
 					for (Teacher teacher : teacherList) {
-						/*HashMap<String, Object> object = new HashMap<String, Object>();
+						HashMap<String, Object> object = new HashMap<String, Object>();
 						object.put("teacherFirstName", teacher.getTeacherFirstName());
 						object.put("teacherLastName", teacher.getTeacherLastName());
 						object.put("Id", teacher.getId());
 						object.put("mobileNo", teacher.getMobileNo());
 						object.put("address", teacher.getAddress());
 						object.put("emailId", teacher.getEmailId());
-						list.add(object);*/
-						k++;
-						System.out.println("K:"+k);
+						list.add(object);
+					}
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().print(
+							new JSONSerializer().exclude("class", "*.class",
+									"authorities").deepSerialize(list));
+				}
+				if (teacherDTO.getAction().equals("delete")){
+					boolean flag = teacherServices.deleteTeacher(teacherDTO.getTeacherId());
+							
+					if (flag) {
+						obj.put("Teacher", "deleted");
+					}
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().print(
+							new JSONSerializer().exclude("class", "*.class",
+									"authorities").deepSerialize(obj));
+				}
+			}
+		}
+		
+	}
+	
+	
+	@RequestMapping(value = "/Student/", method = RequestMethod.POST, headers = "content-type=application/json")
+	public @ResponseBody void Student(@RequestBody StudentDTO studentDTO,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		SchoolAdminController sac = new SchoolAdminController();
+		HashMap<String, String> map = sac.getHashmap();
+		Object value = map.get(studentDTO.getSessionId());
+		Map<String, Object> obj = new HashMap<String, Object>();
+		Object id = map.get("SchoolAdminId");
+		String adminId = id.toString();
+		long adminIDD = Long.parseLong(adminId);
+		SchoolAdmin schoolAdmin = Schooladminservices
+				.getSchoolAdminById(adminIDD);
+		boolean isUnique = false;
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		if (value == null) {
+
+		} else {
+			if ((value.toString()).equals(studentDTO.getSessionId())) {
+				if (studentDTO.getAction().equals("list")){
+					List<Student> studentList = studentServices.getStudentListBySchoolAdminId(adminIDD);
+					int k = 0;
+					for (Student student : studentList) {
+						HashMap<String, Object> object = new HashMap<String, Object>();
+						object.put("StudentFirstName", student.getStudentFirstName());
+						object.put("StudentLastName", student.getStudentLastName());
+						object.put("Id", student.getStudentId());
+						object.put("RollNo", student.getRollNo());
+						object.put("emailId", student.getStudentEmailId());
+						list.add(object);
 					}
 					response.setContentType("application/json; charset=UTF-8");
 					response.getWriter().print(
@@ -527,8 +579,8 @@ public class SchoolAdminController {
 				}
 			}
 		}
-		
 	}
+			
 	
 	
 	public HashMap<String, String> getHashmap() {

@@ -50,9 +50,11 @@ public class StudentServicesImpl implements StudentServices{
 	}
 
 	@Override
-	public List<Student> getStudents() throws Exception {
-	
-		return studentDao.getStudents();
+	public List<Student> getStudentListBySchoolAdminId(long scoolAdminId)
+			throws Exception {
+		return studentDao.getStudentListBySchoolAdminId(scoolAdminId);
 	}
+
+	
  
 }

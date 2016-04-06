@@ -15,4 +15,5 @@ public interface TeacherDao {
 	void updateTeacherField(TeacherDTO tDTO,Teacher t);
 	boolean checkUsername(String username);	
 	List<Teacher> getTeacherListById(long id);
+	boolean deleteTeacher(long id);
 }	

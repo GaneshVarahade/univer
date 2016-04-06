@@ -20,6 +20,7 @@ import com.Univerclassroom.model.Book;
 import com.Univerclassroom.model.FeeStructure;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
+import com.Univerclassroom.model.Teacher;
 
 @Proxy(lazy=false)
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true) 
@@ -150,19 +151,21 @@ public class StudentDaoImpl implements StudentDao{
 		
 	}
 
-	@Override
-	public List<Student> getStudents() throws Exception {
-		
 	
-		Session session = sessionFactory.openSession();
-		String hql = "from Student";
-		Query query = session.createQuery(hql);
-		List<Student> StudentList  = query.list();
-		return StudentList;
+
+	@Override
+	public List<Student> getStudentListBySchoolAdminId(long scoolAdminId)
+			throws Exception {
+		session = sessionFactory.openSession();
+		tx = session.beginTransaction();
 		
-		
-		
-		
+		Criteria c = session.createCriteria(Student.class);
+		c.createAlias("Schooladmin", "sadmin");
+		c.add(Restrictions.eq("sadmin.SchoolAdminId", scoolAdminId));
+		List<Student> studentList = c.list();
+		tx.commit();
+		session.close();
+		return studentList;
 	}
 
 
