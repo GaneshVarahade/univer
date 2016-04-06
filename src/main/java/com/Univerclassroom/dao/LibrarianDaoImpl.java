@@ -146,4 +146,18 @@ public class LibrarianDaoImpl implements LibrarianDao  {
 		
 	}
 
+	@Override
+	public Book getBookById(long UniqueIdentifier) throws Exception {
+		
+		session = sessionFactory.openSession();
+		Book book = (Book) session.load(Book.class,
+				new Long(UniqueIdentifier));
+		tx = session.getTransaction();
+		session.beginTransaction();
+		tx.commit();
+		session.close();
+		return book;	
+		
+	}
+
 }

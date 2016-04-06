@@ -15,4 +15,7 @@ public interface StudentServices {
 	public boolean checkRollNo(String  rollNo);
 	public boolean checkUsername(String username);	
 	public List<Student> getStudentListBySchoolAdminId(long scoolAdminId) throws Exception ;
+	public Student getStudentById(long StudentId) throws Exception;
+	
+	
 }

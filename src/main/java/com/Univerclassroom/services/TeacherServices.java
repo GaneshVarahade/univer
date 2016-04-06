@@ -3,6 +3,7 @@ package com.Univerclassroom.services;
 import java.util.List;
 
 import com.Univerclassroom.DTO.TeacherDTO;
+import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.Teacher;
 
 public interface TeacherServices {
@@ -14,4 +15,5 @@ public interface TeacherServices {
 	boolean checkUsername(String username);	
 	List<Teacher> getTeacherListById(long id);
 	boolean deleteTeacher(long id);
+	public Student getStudentById(long StudentId) throws Exception;
 }

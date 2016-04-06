@@ -168,5 +168,19 @@ public class StudentDaoImpl implements StudentDao{
 		return studentList;
 	}
 
+	@Override
+	public Student getStudentById(long StudentId) throws Exception {
+		
+		session = sessionFactory.openSession();
+		Student student = (Student) session.load(Student.class,
+				new Long(StudentId));
+		tx = session.getTransaction();
+		session.beginTransaction();
+		tx.commit();
+		session.close();
+		return student;	
+		
+	}
+
 
 }

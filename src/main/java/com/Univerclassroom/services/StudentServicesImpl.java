@@ -55,6 +55,12 @@ public class StudentServicesImpl implements StudentServices{
 		return studentDao.getStudentListBySchoolAdminId(scoolAdminId);
 	}
 
+	@Override
+	public Student getStudentById(long StudentId) throws Exception {
+		
+		return studentDao.getStudentById(StudentId);
+	}
+
 	
  
 }

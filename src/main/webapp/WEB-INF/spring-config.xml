@@ -39,6 +39,8 @@
 				<value>com.Univerclassroom.model.Education</value>  
 				<value>com.Univerclassroom.model.Experience</value> 
 				<value>com.Univerclassroom.model.Book</value> 
+				<value>com.Univerclassroom.model.BookIssue</value>
+				
 				 
 		  </list>
 		</property>
