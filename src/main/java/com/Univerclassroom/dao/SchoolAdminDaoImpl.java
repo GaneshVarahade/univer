@@ -63,30 +63,8 @@ public class SchoolAdminDaoImpl implements SchoolAdminDao{
 		    	e.printStackTrace();
 		    }
 			return flag;
-	
 	}
-	/*
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	@Override
-	public SchoolAdmin getClientByUsername(String Username) {
-		
-		Session session;
-		SchoolAdmin  user = null;
-		try{
-			
-			
-			session = sessionFactory.openSession();
-			Criteria criteria = session.createCriteria(SchoolAdmin.class);
-			 criteria.add(Restrictions.eq("username", Username));
-			 Object result=criteria.uniqueResult();
-			 user = (SchoolAdmin)result;
-			
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return user;
-	}*/
+	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	@Override
 	public boolean checkUsername(SchoolAdmin Schooladmin) {

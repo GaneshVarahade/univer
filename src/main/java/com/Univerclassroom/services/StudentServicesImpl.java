@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
+import com.Univerclassroom.DTO.StudentDTO;
 import com.Univerclassroom.dao.StudentDao;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
@@ -59,6 +60,16 @@ public class StudentServicesImpl implements StudentServices{
 	public Student getStudentById(long StudentId) throws Exception {
 		
 		return studentDao.getStudentById(StudentId);
+	}
+
+	@Override
+	public Student getStudentByUsername(String username) {
+		return studentDao.getStudentByUsername(username);
+	}
+
+	@Override
+	public boolean login(StudentDTO student) {
+		return studentDao.login(student);
 	}
 
 	

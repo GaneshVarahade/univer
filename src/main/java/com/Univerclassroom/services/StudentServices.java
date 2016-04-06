@@ -3,6 +3,7 @@ package com.Univerclassroom.services;
 import java.util.List;
 
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
+import com.Univerclassroom.DTO.StudentDTO;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
 
@@ -16,6 +17,7 @@ public interface StudentServices {
 	public boolean checkUsername(String username);	
 	public List<Student> getStudentListBySchoolAdminId(long scoolAdminId) throws Exception ;
 	public Student getStudentById(long StudentId) throws Exception;
-	
+	public Student getStudentByUsername(String username);
+	public boolean login(StudentDTO student);
 	
 }

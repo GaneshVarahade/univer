@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.Univerclassroom.DTO.ParentDTO;
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
 import com.Univerclassroom.model.Parent;
 import com.Univerclassroom.model.Student;
@@ -79,6 +80,43 @@ public class ParentDaoImpl implements ParentDao{
 		    	e.printStackTrace();
 		    }
 			return flag;
+	}
+
+	@Override
+	public Parent getParentByUsername(String username) {
+		Session session;
+		Parent  parent = null;
+		try{
+			session = sessionFactory.openSession();
+			Criteria criteria = session.createCriteria(Parent.class);
+			 criteria.add(Restrictions.eq("ParentUsername", username));
+			 Object result=criteria.uniqueResult();
+			 parent = (Parent)result;
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return parent;
+	}
+
+	@Override
+	public boolean login(ParentDTO parent) {
+		boolean flag=true;
+	    try{  	
+	    session = sessionFactory.openSession();
+		Criteria c = session.createCriteria(Parent.class);
+		c.add(Restrictions.eq("ParentUsername", parent.getUsername()));
+		c.add(Restrictions.eq("ParentPassword", parent.getPassword()));
+		Object u = c.uniqueResult();
+		if(u==null)
+		{
+			flag=false;
+		}
+	    }catch(Exception e){
+	    	e.printStackTrace();
+	    }
+		return flag;
 	}
 
 }

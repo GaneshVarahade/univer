@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.Univerclassroom.DTO.ParentDTO;
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
 import com.Univerclassroom.dao.ParentDao;
 import com.Univerclassroom.model.Parent;
@@ -30,6 +31,16 @@ public class ParentServicesImpl implements ParentServices{
 	@Override
 	public boolean checkUsername(String username) {
 		return parentDao.checkUsername(username);
+	}
+
+	@Override
+	public Parent getParentByUsername(String username) {
+		return parentDao.getParentByUsername(username);
+	}
+
+	@Override
+	public boolean login(ParentDTO parent) {
+		return parentDao.login(parent);
 	}
 	
 	

@@ -15,12 +15,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
-import com.Univerclassroom.model.Admin;
-import com.Univerclassroom.model.Book;
-import com.Univerclassroom.model.FeeStructure;
+import com.Univerclassroom.DTO.StudentDTO;
+import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
-import com.Univerclassroom.model.Teacher;
+
 
 @Proxy(lazy=false)
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true) 
@@ -180,6 +179,43 @@ public class StudentDaoImpl implements StudentDao{
 		session.close();
 		return student;	
 		
+	}
+
+	@Override
+	public boolean login(StudentDTO student) {
+		 boolean flag=true;
+		    try{  	
+		    session = sessionFactory.openSession();
+			Criteria c = session.createCriteria(Student.class);
+			c.add(Restrictions.eq("StudentUsername", student.getUsername()));
+			c.add(Restrictions.eq("StudentPassword", student.getPassword()));
+			Object u = c.uniqueResult();
+			if(u==null)
+			{
+				flag=false;
+			}
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }
+			return flag;
+	}
+
+	@Override
+	public Student getStudentByUsername(String username) {
+		Session session;
+		Student  student = null;
+		try{
+			session = sessionFactory.openSession();
+			Criteria criteria = session.createCriteria(Student.class);
+			 criteria.add(Restrictions.eq("StudentUsername", username));
+			 Object result=criteria.uniqueResult();
+			 student = (Student)result;
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return student;
 	}
 
 
