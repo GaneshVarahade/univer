@@ -336,32 +336,62 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 		      obj.put("Added", "unsuccessful");
 		 } else{
 				if ((value.toString()).equals(bookIssueDTO.getSessionId())) {
+					if(bookIssueDTO.getAction().equals("bookIssue")){
 					if(bookIssueDTO.getStudentId() == 0 ){
 						teacher = teacherServices.getTeacherById(bookIssueDTO.getTeacherId());
 						flag = true;
 					}else{
 						student = studentServices.getStudentById(bookIssueDTO.getStudentId());
 					}
-				
 					Book book = Librarianservices.getBookById(bookIssueDTO.getUniqueIdentifier());
 					book.setIssued(true);
 					BookIssue bookIssue = new BookIssue();
 					bookIssue.setBook(book);
 					bookIssue.setTeacher(teacher);
 					bookIssue.setStudent(student);
+					
 					boolean isadded = Librarianservices.addBookIssue(bookIssue);
 					if(isadded){
 						obj.put("BookIssued","Successfully");
 					}else{
 						obj.put("BookIssued","Unuccessfully");
 					}
-					
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().print(
+							new JSONSerializer().exclude("class", "*.class",
+									"authorities").deepSerialize(obj));
+				}
+					if(bookIssueDTO.getAction().equals("fromTeacher")){
+						boolean isadded = false;
+						
+						BookIssue bookIssue=null;
+						
+						 bookIssue = teacherServices.getBookIssuedByTeacherId(bookIssueDTO.getTeacherId(), bookIssueDTO.getUniqueIdentifier());
+						
+						if(bookIssue != null){
+							student = studentServices.getStudentById(bookIssueDTO.getStudentId());
+							bookIssue.setStudent(student);
+							bookIssue.setTeacher(null);
+							
+							isadded = Librarianservices.addBookIssue(bookIssue);
+							
+						 
+							
+						}
+						if(isadded){
+							obj.put("BookIssued","Successfully");
+						}else{
+							obj.put("BookIssued","Unuccessfully");
+						}
+						response.setContentType("application/json; charset=UTF-8");
+						response.getWriter().print(
+								new JSONSerializer().exclude("class", "*.class",
+										"authorities").deepSerialize(obj));
+						
+					}
 				}
 		 }
-			response.setContentType("application/json; charset=UTF-8");
-			response.getWriter().print(
-					new JSONSerializer().exclude("class", "*.class",
-							"authorities").deepSerialize(obj));
+			
 	}
 	
 	

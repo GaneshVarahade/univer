@@ -6,7 +6,14 @@ public class BookIssueDTO {
 	private long TeacherId;
 	private long StudentId;
 	private long UniqueIdentifier;
+	private String action;
 	
+	public String getAction() {
+		return action;
+	}
+	public void setAction(String action) {
+		this.action = action;
+	}
 	public String getSessionId() {
 		return sessionId;
 	}

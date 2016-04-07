@@ -167,7 +167,7 @@ public class LibrarianDaoImpl implements LibrarianDao  {
 		 try{    
 		    	session = sessionFactory.openSession();
 				tx = session.beginTransaction();
-				session.save(bookIssue);
+				session.saveOrUpdate(bookIssue);
 				flag = true;
 				tx.commit();
 				session.close();

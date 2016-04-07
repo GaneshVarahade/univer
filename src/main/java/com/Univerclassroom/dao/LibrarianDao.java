@@ -19,4 +19,5 @@ public interface LibrarianDao {
 	public List<Book> getBookListByTitle(String Title,Long LibrarianId) throws Exception;
 	public List<Book> getBookListByLibId(Long LibrarianId) throws Exception ;
 	public boolean addBookIssue(BookIssue bookIssue);
+	
 }

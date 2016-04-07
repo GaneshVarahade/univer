@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Univerclassroom.DTO.TeacherDTO;
 import com.Univerclassroom.dao.TeacherDao;
+import com.Univerclassroom.model.BookIssue;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.Teacher;
 
@@ -56,5 +57,12 @@ public class TeacherServicesImpl implements TeacherServices {
 		return teacherDao.deleteTeacher(id);
 	}
 
+	@Override
+	public BookIssue getBookIssuedByTeacherId(long Id, long UniqueIdentifier)
+			throws Exception {
+		return teacherDao.getBookIssuedByTeacherId(Id, UniqueIdentifier);
+	}
+
+	
 	
 }
