@@ -5,6 +5,7 @@ public class StudentClassDTO {
 	private String sessionId;
 	private String className;
 	private String action;
+	private long studentClassId;
 	
 	public String getSessionId() {
 		return sessionId;
@@ -23,6 +24,12 @@ public class StudentClassDTO {
 	}
 	public void setAction(String action) {
 		this.action = action;
+	}
+	public long getStudentClassId() {
+		return studentClassId;
+	}
+	public void setStudentClassId(long studentClassId) {
+		this.studentClassId = studentClassId;
 	}
 
 }

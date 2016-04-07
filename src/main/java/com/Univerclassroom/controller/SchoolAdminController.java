@@ -387,7 +387,8 @@ public class SchoolAdminController {
 									.getStudentUsername());
 							student.setStudentPassword(accountDTO
 									.getStudentPassword());
-								student.setSchooladmin(schoolAdmin);								student.setSchooladmin(schoolAdmin);
+								student.setSchooladmin(schoolAdmin);								
+								student.setSchooladmin(schoolAdmin);
 
 							String studeEmail = student.getStudentEmailId();
 							String msg = "your admission is confirmed. Credentials are below:\n"+"Roll No:"+student.getRollNo() +"\nUsername: "+student.getStudentUsername() +"\nPassword: "+student.getStudentPassword();
@@ -591,11 +592,10 @@ public class SchoolAdminController {
 	public @ResponseBody void studentClass(@RequestBody StudentClassDTO studentClassDTO,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		
+		List<StudentClass> studentClassList = null;
 		SchoolAdminController sac = new SchoolAdminController();
 		HashMap<String, String> map = sac.getHashmap();
 		Object value = map.get(studentClassDTO.getSessionId());
-		Map<String, Object> obj = new HashMap<String, Object>();
 		Object id = map.get("SchoolAdminId");
 		String adminId = id.toString();
 		long adminIDD = Long.parseLong(adminId);
@@ -607,23 +607,47 @@ public class SchoolAdminController {
 		} else {
 			if ((value.toString()).equals(studentClassDTO.getSessionId())) {
 				if (studentClassDTO.getAction().equals("add")){
+					Map<String, Object> obj = new HashMap<String, Object>();
 					StudentClass studentClass = new StudentClass();
 					studentClass.setClassName(studentClassDTO.getClassName());
 					studentClass.setSchoolAdmin(schoolAdmin);
+					boolean isUnique = studentClassServices.checkStudentClassUnique(studentClass);
+					if(isUnique){
 					boolean flag = studentClassServices.addStudentClass(studentClass);
 					if(flag){
 						obj.put("StudentClass", "Added");
 					}
-					}else{
+					}
+					else{
 						obj.put("StudentClass", "Not Added");
+					}
+					
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().print(new JSONSerializer().exclude("class", "*.class","authorities").deepSerialize(obj));
+				}
+				if (studentClassDTO.getAction().equals("delete")){
+					Map<String, Object> obj = new HashMap<String, Object>();
+					boolean flag = studentClassServices.deleteStudentClass(studentClassDTO.getStudentClassId());
+					if (flag) {
+						obj.put("StudentClass", "deleted");
 					}
 					response.setContentType("application/json; charset=UTF-8");
 					response.getWriter().print(new JSONSerializer().exclude("class", "*.class","authorities").deepSerialize(obj));
 				}
+				if (studentClassDTO.getAction().equals("list")){
+					studentClassList = studentClassServices.getStudentClassListBySchoolAdminId(adminIDD);
+					for (StudentClass studClass : studentClassList) {
+						HashMap<String, Object> object = new HashMap<String, Object>();
+						object.put("Id", studClass.getStudentClassId());
+						object.put("ClassName",studClass.getClassName());
+						list.add(object);
+					}
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().print(new JSONSerializer().exclude("class", "*.class","authorities").deepSerialize(list));		
+				}
 			}
-		}
-
-		
+		}	
+	}
 		
 	
 	
