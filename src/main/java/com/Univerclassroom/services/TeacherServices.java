@@ -18,4 +18,5 @@ public interface TeacherServices {
 	boolean deleteTeacher(long id);
 	public BookIssue getBookIssuedByTeacherId(long Id,long UniqueIdentifier) throws Exception;
 	
+	
 }

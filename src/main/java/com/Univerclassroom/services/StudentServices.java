@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
 import com.Univerclassroom.DTO.StudentDTO;
+import com.Univerclassroom.model.BookIssue;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
 
@@ -19,5 +20,5 @@ public interface StudentServices {
 	public Student getStudentById(long StudentId) throws Exception;
 	public Student getStudentByUsername(String username);
 	public boolean login(StudentDTO student);
-	
+	public BookIssue getBookIssuedByStudentId(long StudentId,long UniqueIdentifier) throws Exception;
 }

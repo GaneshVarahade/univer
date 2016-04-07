@@ -378,17 +378,46 @@ public static HashMap<String, String> map = new HashMap<String, String>();
 						 
 							
 						}
+						
 						if(isadded){
 							obj.put("BookIssued","Successfully");
 						}else{
 							obj.put("BookIssued","Unuccessfully");
 						}
+					}	
+						if(bookIssueDTO.getAction().equals("fromStudent")){
+							boolean isaddedstudent = false;
+							
+							BookIssue bookIssue1=null;
+							
+							 bookIssue1 = studentServices.getBookIssuedByStudentId(bookIssueDTO.getStudentId(), bookIssueDTO.getUniqueIdentifier());
+							
+							if(bookIssue1 != null){
+								teacher = teacherServices.getTeacherById(bookIssueDTO.getTeacherId());
+								bookIssue1.setTeacher(teacher);
+								bookIssue1.setStudent(null);
+								
+								isaddedstudent = Librarianservices.addBookIssue(bookIssue1);
+								
+							 
+								
+							}
+							if(isaddedstudent){
+								obj.put("BookIssued","Successfully");
+							}else{
+								obj.put("BookIssued","Unuccessfully");
+							}
+						
+						
+						}
+					
 						response.setContentType("application/json; charset=UTF-8");
 						response.getWriter().print(
 								new JSONSerializer().exclude("class", "*.class",
 										"authorities").deepSerialize(obj));
 						
-					}
+					
+				
 				}
 		 }
 			

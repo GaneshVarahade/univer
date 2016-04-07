@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
 import com.Univerclassroom.DTO.StudentDTO;
 import com.Univerclassroom.dao.StudentDao;
+import com.Univerclassroom.model.BookIssue;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
 
@@ -70,6 +71,13 @@ public class StudentServicesImpl implements StudentServices{
 	@Override
 	public boolean login(StudentDTO student) {
 		return studentDao.login(student);
+	}
+
+	@Override
+	public BookIssue getBookIssuedByStudentId(long StudentId,
+			long UniqueIdentifier) throws Exception {
+		
+		return studentDao.getBookIssuedByStudentId(StudentId, UniqueIdentifier);
 	}
 
 	

@@ -18,5 +18,5 @@ public interface TeacherDao {
 	boolean checkUsername(String username);	
 	List<Teacher> getTeacherListById(long id);
 	boolean deleteTeacher(long id);
-	public BookIssue getBookIssuedByTeacherId(long TeacherId,long UniqueIdentifier) throws Exception;
+	public BookIssue getBookIssuedByTeacherId(long Id,long UniqueIdentifier) throws Exception;
 }	

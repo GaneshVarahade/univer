@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Univerclassroom.DTO.StudentAdmissionDTO;
 import com.Univerclassroom.DTO.StudentDTO;
+import com.Univerclassroom.model.BookIssue;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentToParent;
@@ -216,6 +217,32 @@ public class StudentDaoImpl implements StudentDao{
 			e.printStackTrace();
 		}
 		return student;
+	}
+
+	@Override
+	public BookIssue getBookIssuedByStudentId(long StudentId,
+			long UniqueIdentifier) throws Exception {
+		
+		
+		
+		Session session;
+		session = sessionFactory.openSession();
+
+		Criteria c = session.createCriteria(BookIssue.class);
+		tx = session.getTransaction();
+		session.beginTransaction();
+		c.createAlias("student", "s");
+		c.add(Restrictions.eq("s.StudentId", StudentId));
+		c.createAlias("book", "b");
+		c.add(Restrictions.eq("b.UniqueIdentifier", UniqueIdentifier));
+		BookIssue bookIssue = (BookIssue) c.uniqueResult();
+		tx.commit();
+		session.close();
+
+		return bookIssue;
+		
+		
+		
 	}
 
 
