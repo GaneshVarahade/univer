@@ -69,13 +69,25 @@ public class SchoolAdmin implements Serializable{
 	public void setSchool(School school) {
 		this.school = school;
 	}
+	
+	@OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="SchoolAdminId")
+	private Set<StudentClass> studentClass;
+	
+	public Set<StudentClass> getStudentClass() {
+		return studentClass;
+	}
+	public void setStudentClass(Set<StudentClass> studentClass) {
+		this.studentClass = studentClass;
+	}
+
 	@OneToOne()
     @JoinColumn(name="SchoolId")
        private School school;
     
 
     
-@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="SchoolAdminId")
 	private Set<Student> student;
 

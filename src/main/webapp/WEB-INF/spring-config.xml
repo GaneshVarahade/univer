@@ -40,7 +40,8 @@
 				<value>com.Univerclassroom.model.Experience</value> 
 				<value>com.Univerclassroom.model.Book</value> 
 				<value>com.Univerclassroom.model.BookIssue</value>
-				
+				<value>com.Univerclassroom.model.StudentClass</value>
+				<value>com.Univerclassroom.model.StudentDivision</value>
 				 
 		  </list>
 		</property>
@@ -89,5 +90,8 @@
 		
 	<bean id="TeacherDao" class="com.Univerclassroom.dao.TeacherDaoImpl"></bean>
 	<bean id="TeacherServices" class="com.Univerclassroom.services.TeacherServicesImpl"></bean>
+	
+	<bean id="StudentClassDao" class="com.Univerclassroom.dao.StudentClassDaoImpl"></bean>
+	<bean id="StudentClassServices" class="com.Univerclassroom.services.StudentClassServicesImpl"></bean>
 </beans>
 

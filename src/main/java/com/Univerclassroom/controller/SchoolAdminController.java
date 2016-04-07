@@ -26,12 +26,14 @@ import com.Univerclassroom.model.Parent;
 import com.Univerclassroom.model.School;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.Student;
+import com.Univerclassroom.model.StudentClass;
 import com.Univerclassroom.model.StudentToParent;
 import com.Univerclassroom.model.Teacher;
 import com.Univerclassroom.DTO.AccountDTO;
 import com.Univerclassroom.DTO.AdmissionResultDTO;
 import com.Univerclassroom.DTO.FeeStructureDTO;
 import com.Univerclassroom.DTO.SchoolAdminDTO;
+import com.Univerclassroom.DTO.StudentClassDTO;
 import com.Univerclassroom.DTO.StudentDTO;
 import com.Univerclassroom.DTO.TeacherDTO;
 import com.Univerclassroom.services.AccountServices;
@@ -41,6 +43,7 @@ import com.Univerclassroom.services.Mailer;
 import com.Univerclassroom.services.ParentServices;
 import com.Univerclassroom.services.SchoolAdminServices;
 import com.Univerclassroom.services.SchoolServices;
+import com.Univerclassroom.services.StudentClassServices;
 import com.Univerclassroom.services.StudentServices;
 import com.Univerclassroom.services.TeacherServices;
 
@@ -74,6 +77,9 @@ public class SchoolAdminController {
 
 	@Autowired
 	TeacherServices teacherServices;
+	
+	@Autowired
+	StudentClassServices studentClassServices;
 	
 	public static HashMap<String, String> map = new HashMap<String, String>();
 
@@ -580,7 +586,46 @@ public class SchoolAdminController {
 			}
 		}
 	}
-			
+		
+	@RequestMapping(value = "/Class/", method = RequestMethod.POST, headers = "content-type=application/json")
+	public @ResponseBody void studentClass(@RequestBody StudentClassDTO studentClassDTO,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		
+		SchoolAdminController sac = new SchoolAdminController();
+		HashMap<String, String> map = sac.getHashmap();
+		Object value = map.get(studentClassDTO.getSessionId());
+		Map<String, Object> obj = new HashMap<String, Object>();
+		Object id = map.get("SchoolAdminId");
+		String adminId = id.toString();
+		long adminIDD = Long.parseLong(adminId);
+		SchoolAdmin schoolAdmin = Schooladminservices.getSchoolAdminById(adminIDD);
+		
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		if (value == null) {
+
+		} else {
+			if ((value.toString()).equals(studentClassDTO.getSessionId())) {
+				if (studentClassDTO.getAction().equals("add")){
+					StudentClass studentClass = new StudentClass();
+					studentClass.setClassName(studentClassDTO.getClassName());
+					studentClass.setSchoolAdmin(schoolAdmin);
+					boolean flag = studentClassServices.addStudentClass(studentClass);
+					if(flag){
+						obj.put("StudentClass", "Added");
+					}
+					}else{
+						obj.put("StudentClass", "Not Added");
+					}
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().print(new JSONSerializer().exclude("class", "*.class","authorities").deepSerialize(obj));
+				}
+			}
+		}
+
+		
+		
+	
 	
 	
 	public HashMap<String, String> getHashmap() {

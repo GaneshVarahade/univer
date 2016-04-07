@@ -16,11 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Univerclassroom.DTO.ParentDTO;
-import com.Univerclassroom.DTO.StudentDTO;
 import com.Univerclassroom.model.Parent;
-import com.Univerclassroom.model.Student;
 import com.Univerclassroom.services.ParentServices;
-import com.Univerclassroom.services.StudentServices;
 
 import flexjson.JSONSerializer;
 

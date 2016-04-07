@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -53,6 +54,19 @@ public class Teacher implements Serializable{
 	@OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name="EducationId")
 	private Set<Education> education;
+
+	@OneToOne(mappedBy="teacher" , fetch = FetchType.EAGER)
+    private StudentDivision studentDivision;
+	
+	
+
+	public StudentDivision getStudentDivision() {
+		return studentDivision;
+	}
+
+	public void setStudentDivision(StudentDivision studentDivision) {
+		this.studentDivision = studentDivision;
+	}
 
 	public long getId() {
 		return Id;
