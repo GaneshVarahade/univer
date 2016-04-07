@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.Univerclassroom.model.FeeStructure;
 import com.Univerclassroom.model.StudentClass;
 
 @Proxy(lazy=false)
@@ -96,6 +95,18 @@ public class StudentClassDaoImpl implements StudentClassDao{
 	    	flag = false;
 	    }
 	    return flag;
+	}
+
+	@Override
+	public StudentClass getStudentClassById(long id) throws Exception {
+		session = sessionFactory.openSession();
+		StudentClass studClass = (StudentClass) session.load(StudentClass.class,
+				new Long(id));
+		tx = session.getTransaction();
+		session.beginTransaction();
+		tx.commit();
+		session.close();
+		return studClass;
 	}
 
 }

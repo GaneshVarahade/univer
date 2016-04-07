@@ -16,7 +16,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/Univerclassroom" />
 		<property name="username" value="root" />
-		<property name="password" value="admin" />
+		<property name="password" value="root" />
 	</bean>
 
 	<bean id="sessionFactory"
@@ -94,5 +94,8 @@
 	
 	<bean id="StudentClassDao" class="com.Univerclassroom.dao.StudentClassDaoImpl"></bean>
 	<bean id="StudentClassServices" class="com.Univerclassroom.services.StudentClassServicesImpl"></bean>
+	
+	<bean id="StudentDivisionDao" class="com.Univerclassroom.dao.StudentDivisionDaoImpl"></bean>
+	<bean id="StudentDivisionServices" class="com.Univerclassroom.services.StudentDivisionServicesImpl"></bean>
 </beans>
 

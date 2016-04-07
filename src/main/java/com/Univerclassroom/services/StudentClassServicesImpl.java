@@ -38,4 +38,9 @@ public class StudentClassServicesImpl implements StudentClassServices{
 		return studentClassDao.checkStudentClassUnique(studClass);
 	}
 
+	@Override
+	public StudentClass getStudentClassById(long id) throws Exception {
+		return studentClassDao.getStudentClassById(id);
+	}
+
 }

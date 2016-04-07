@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.Univerclassroom.dao.StudentDivisionDao;
 import com.Univerclassroom.model.Account;
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.AdmissionResult;
@@ -28,6 +29,7 @@ import com.Univerclassroom.model.School;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentClass;
+import com.Univerclassroom.model.StudentDivision;
 import com.Univerclassroom.model.StudentToParent;
 import com.Univerclassroom.model.Teacher;
 import com.Univerclassroom.DTO.AccountDTO;
@@ -37,6 +39,7 @@ import com.Univerclassroom.DTO.HolidayDTO;
 import com.Univerclassroom.DTO.SchoolAdminDTO;
 import com.Univerclassroom.DTO.StudentClassDTO;
 import com.Univerclassroom.DTO.StudentDTO;
+import com.Univerclassroom.DTO.StudentDivisionDTO;
 import com.Univerclassroom.DTO.TeacherDTO;
 import com.Univerclassroom.services.AccountServices;
 import com.Univerclassroom.services.AdminServices;
@@ -46,6 +49,7 @@ import com.Univerclassroom.services.ParentServices;
 import com.Univerclassroom.services.SchoolAdminServices;
 import com.Univerclassroom.services.SchoolServices;
 import com.Univerclassroom.services.StudentClassServices;
+import com.Univerclassroom.services.StudentDivisionServices;
 import com.Univerclassroom.services.StudentServices;
 import com.Univerclassroom.services.TeacherServices;
 
@@ -82,6 +86,9 @@ public class SchoolAdminController {
 	
 	@Autowired
 	StudentClassServices studentClassServices;
+	
+	@Autowired
+	StudentDivisionServices studentDivisionService;
 	
 	public static HashMap<String, String> map = new HashMap<String, String>();
 
@@ -651,6 +658,48 @@ public class SchoolAdminController {
 		}	
 	}
 		
+	@RequestMapping(value = "/Division/", method = RequestMethod.POST, headers = "content-type=application/json")
+	public @ResponseBody void studentDivision(@RequestBody StudentDivisionDTO studentDivisionDTO,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		List<StudentClass> studentClassList = null;
+		SchoolAdminController sac = new SchoolAdminController();
+		HashMap<String, String> map = sac.getHashmap();
+		Object value = map.get(studentDivisionDTO.getSessionId());
+		Object id = map.get("SchoolAdminId");
+		String adminId = id.toString();
+		long adminIDD = Long.parseLong(adminId);
+		SchoolAdmin schoolAdmin = Schooladminservices.getSchoolAdminById(adminIDD);
+		
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		if (value == null) {
+
+		} else {
+			if ((value.toString()).equals(studentDivisionDTO.getSessionId())) {
+				if (studentDivisionDTO.getAction().equals("add")){
+				Map<String, Object> obj = new HashMap<String, Object>();
+				StudentClass studClass = studentClassServices.getStudentClassById(studentDivisionDTO.getStudentClassId());
+				Teacher teacher = teacherServices.getTeacherById(studentDivisionDTO.getTeacherId());
+				boolean flag = false;
+				if(teacher != null && studClass != null){
+					StudentDivision studentDiv = new StudentDivision();
+					studentDiv.setDivisonName(studentDivisionDTO.getDivisionName());
+					studentDiv.setStudentClass(studClass);
+					studentDiv.setTeacher(teacher);
+					flag = studentDivisionService.addStudentDivision(studentDiv);
+				}
+				if(flag){
+					obj.put("Division", "Added");
+				}else{
+					obj.put("Division", "Not Added");
+				}
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().print(new JSONSerializer().exclude("class", "*.class","authorities").deepSerialize(obj));		
+				}
+			}
+		}
+		
+	}
 	
 	
 	@RequestMapping(value = "/addHoliday/", method = RequestMethod.POST, headers = "content-type=application/json")

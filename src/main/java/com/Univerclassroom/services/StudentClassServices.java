@@ -10,4 +10,5 @@ public interface StudentClassServices {
 	boolean deleteStudentClass(long studentClassId) throws Exception;
 	List<StudentClass> getStudentClassListBySchoolAdminId(long scoolAdminId) throws Exception ;
 	boolean checkStudentClassUnique(StudentClass studClass);
+	StudentClass getStudentClassById(long id) throws Exception;
 }
