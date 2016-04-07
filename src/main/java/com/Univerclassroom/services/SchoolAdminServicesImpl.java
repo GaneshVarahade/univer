@@ -10,6 +10,7 @@ import com.Univerclassroom.dao.AdminDao;
 import com.Univerclassroom.dao.SchoolAdminDao;
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.AdmissionResult;
+import com.Univerclassroom.model.Holiday;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.StudentToParent;
 import com.Univerclassroom.model.Teacher;
@@ -68,6 +69,12 @@ public class SchoolAdminServicesImpl implements SchoolAdminServices {
 	@Override
 	public boolean addTeacher(Teacher teacher) throws Exception {
 		return Schooladmindao.addTeacher(teacher);
+	}
+
+	@Override
+	public boolean addHoliday(Holiday holiday) throws Exception {
+		
+		return Schooladmindao.addHoliday(holiday) ;
 	}
 	
 }

@@ -85,6 +85,16 @@ public class SchoolAdmin implements Serializable{
     @JoinColumn(name="SchoolId")
        private School school;
     
+	public Set<Holiday> getHoliday() {
+		return holiday;
+	}
+	public void setHoliday(Set<Holiday> holiday) {
+		this.holiday = holiday;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="SchoolAdminId")
+	private Set<Holiday> holiday;
 
     
 	@OneToMany(cascade=CascadeType.ALL)

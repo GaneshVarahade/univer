@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.AdmissionResult;
+import com.Univerclassroom.model.Holiday;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.StudentToParent;
 import com.Univerclassroom.model.Teacher;
@@ -191,6 +192,24 @@ public class SchoolAdminDaoImpl implements SchoolAdminDao{
 		    	e.printStackTrace();
 		    }
 			return flag;		
+	}
+	@Override
+	public boolean addHoliday(Holiday holiday) throws Exception {
+		boolean flag = false;
+		 try{    
+		    	session = sessionFactory.openSession();
+				tx = session.beginTransaction();
+				session.save(holiday);
+				flag = true;
+				tx.commit();
+				session.close();
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }
+			return flag;		
+		
+		
+		
 	}
 	
 	

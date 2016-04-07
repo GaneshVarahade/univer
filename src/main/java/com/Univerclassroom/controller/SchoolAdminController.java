@@ -22,6 +22,7 @@ import com.Univerclassroom.model.Account;
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.AdmissionResult;
 import com.Univerclassroom.model.FeeStructure;
+import com.Univerclassroom.model.Holiday;
 import com.Univerclassroom.model.Parent;
 import com.Univerclassroom.model.School;
 import com.Univerclassroom.model.SchoolAdmin;
@@ -32,6 +33,7 @@ import com.Univerclassroom.model.Teacher;
 import com.Univerclassroom.DTO.AccountDTO;
 import com.Univerclassroom.DTO.AdmissionResultDTO;
 import com.Univerclassroom.DTO.FeeStructureDTO;
+import com.Univerclassroom.DTO.HolidayDTO;
 import com.Univerclassroom.DTO.SchoolAdminDTO;
 import com.Univerclassroom.DTO.StudentClassDTO;
 import com.Univerclassroom.DTO.StudentDTO;
@@ -651,7 +653,45 @@ public class SchoolAdminController {
 		
 	
 	
+	@RequestMapping(value = "/addHoliday/", method = RequestMethod.POST, headers = "content-type=application/json")
+	public @ResponseBody void addholiday(@RequestBody HolidayDTO holidayDTO,HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		Map<String, Object> obj = new HashMap<String, Object>();
+		@SuppressWarnings("unused")
+		Holiday holiday = new Holiday(holidayDTO);
+		SchoolAdminController lg = new SchoolAdminController();
+
+		HashMap<String, String> map = lg.getHashmap();
+		Object value = map.get(holidayDTO.getSessionId());
+		Object id = map.get("SchoolAdminId");
+
+		if (value == null) {
+			obj.put("Added", "unsuccessful");
+			
+		} else {
+		if ((value.toString()).equals(holidayDTO.getSessionId())) {
 	
+				
+
+					String SchoolAdminId = id.toString();
+					long SchoolAdminId1 = Long.parseLong(SchoolAdminId);
+					SchoolAdmin schooladmin = Schooladminservices.getSchoolAdminById(SchoolAdminId1);
+
+				
+					holiday.setSchoolAdmin(schooladmin);
+					Schooladminservices.addHoliday(holiday);
+					obj.put("Added", "successful");
+				
+				}
+		}
+		response.setContentType("application/json; charset=UTF-8");
+		response.getWriter().print(
+				new JSONSerializer().exclude("class", "*.class", "authorities")
+						.deepSerialize(obj));
+		
+		
+		}
 	public HashMap<String, String> getHashmap() {
 
 		return map;

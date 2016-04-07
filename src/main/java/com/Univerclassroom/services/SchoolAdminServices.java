@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.Univerclassroom.model.Admin;
 import com.Univerclassroom.model.AdmissionResult;
+import com.Univerclassroom.model.Holiday;
 import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.StudentToParent;
 import com.Univerclassroom.model.Teacher;
@@ -20,5 +21,6 @@ public interface SchoolAdminServices {
 		public StudentToParent getStudentToParentById(long id);
 		public boolean addAdmissionResult(AdmissionResult ar) throws Exception;
 		public boolean addTeacher(Teacher teacher) throws Exception;
+		public boolean addHoliday(Holiday holiday) throws Exception;
 	}
 
