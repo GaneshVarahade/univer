@@ -1,12 +1,15 @@
 package com.Univerclassroom.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -31,6 +34,18 @@ public class StudentDivision implements Serializable{
 	@OneToOne()
     @JoinColumn(name="Id")
     private Teacher teacher;
+
+	/*@OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="StudentId",insertable=true, updatable=true)
+	private Set<Student> student;
+	
+	public Set<Student> getStudent() {
+		return student;
+	}
+
+	public void setStudent(Set<Student> student) {
+		this.student = student;
+	}*/
 
 	public long getStudentDivisionId() {
 		return StudentDivisionId;

@@ -3,8 +3,10 @@ package com.Univerclassroom.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +32,7 @@ import com.Univerclassroom.model.SchoolAdmin;
 import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentClass;
 import com.Univerclassroom.model.StudentDivision;
+import com.Univerclassroom.model.StudentDivisonToStudent;
 import com.Univerclassroom.model.StudentToParent;
 import com.Univerclassroom.model.Teacher;
 import com.Univerclassroom.DTO.AccountDTO;
@@ -50,6 +53,7 @@ import com.Univerclassroom.services.SchoolAdminServices;
 import com.Univerclassroom.services.SchoolServices;
 import com.Univerclassroom.services.StudentClassServices;
 import com.Univerclassroom.services.StudentDivisionServices;
+import com.Univerclassroom.services.StudentDivisonToStudentServices;
 import com.Univerclassroom.services.StudentServices;
 import com.Univerclassroom.services.TeacherServices;
 
@@ -89,6 +93,9 @@ public class SchoolAdminController {
 	
 	@Autowired
 	StudentDivisionServices studentDivisionService;
+	
+	@Autowired
+	StudentDivisonToStudentServices studentDivisonToStudentServices;
 	
 	public static HashMap<String, String> map = new HashMap<String, String>();
 
@@ -745,4 +752,49 @@ public class SchoolAdminController {
 
 		return map;
 	}
-}
+	
+	@RequestMapping(value = "/assignDivisionToStudent/", method = RequestMethod.POST, headers = "content-type=application/json")
+	public @ResponseBody void assignDivision(@RequestBody StudentDivisionDTO studentDivisionDTO,HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		SchoolAdminController sac = new SchoolAdminController();
+		HashMap<String, String> map = sac.getHashmap();
+		Object value = map.get(studentDivisionDTO.getSessionId());
+		Object id = map.get("SchoolAdminId");
+		String adminId = id.toString();
+		long adminIDD = Long.parseLong(adminId);
+		SchoolAdmin schoolAdmin = Schooladminservices.getSchoolAdminById(adminIDD);
+		Map<String, Object> obj = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		if (value == null) {
+
+		} else {
+			if ((value.toString()).equals(studentDivisionDTO.getSessionId())) {
+				if (studentDivisionDTO.getAction().equals("add")){
+					StudentDivision studentDivision = studentDivisionService.getStudentDivisionById(studentDivisionDTO.getDivisionId());
+					Student student = studentServices.getStudentById(studentDivisionDTO.getStudentId());
+					StudentDivisonToStudent sdts = new StudentDivisonToStudent();
+					sdts.setStudent(student);
+					sdts.setStudentDivisionId(studentDivision);
+					sdts.setSchoolAdmin(schoolAdmin);
+					
+					boolean flag = studentDivisonToStudentServices.addOrUpdateStudentDivisonToStudent(sdts);
+					if(flag){
+						obj.put("Added", "Student");
+					}else{
+						obj.put("Not Added", "Student");
+					}
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().print(new JSONSerializer().exclude("class", "*.class", "authorities").deepSerialize(obj));
+				}
+				if (studentDivisionDTO.getAction().equals("list")){
+					List<StudentDivisonToStudent> studentDivision = studentDivisonToStudentServices.getStudentDivisionToStudentbySchoolAdminId(schoolAdmin.getSchoolAdminId());
+						for (StudentDivisonToStudent studentDivisonToStudent : studentDivision) {
+								System.out.println(studentDivisonToStudent.getId());
+						}
+				}
+			}
+		}
+	}
+	
+	}

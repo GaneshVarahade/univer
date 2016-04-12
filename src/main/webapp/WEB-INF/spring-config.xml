@@ -43,6 +43,8 @@
 				<value>com.Univerclassroom.model.StudentClass</value>
 				<value>com.Univerclassroom.model.StudentDivision</value>
 				<value>com.Univerclassroom.model.Holiday</value>
+				<value>com.Univerclassroom.model.StudentDivisonToStudent</value>
+				
 				 
 		  </list>
 		</property>
@@ -97,5 +99,8 @@
 	
 	<bean id="StudentDivisionDao" class="com.Univerclassroom.dao.StudentDivisionDaoImpl"></bean>
 	<bean id="StudentDivisionServices" class="com.Univerclassroom.services.StudentDivisionServicesImpl"></bean>
+	
+	<bean id="StudentDivisonToStudentDao" class="com.Univerclassroom.dao.StudentDivisonToStudentDaoImpl"></bean>
+	<bean id="StudentDivisonToStudentServices" class="com.Univerclassroom.services.StudentDivisonToStudentServicesImpl"></bean>
 </beans>
 

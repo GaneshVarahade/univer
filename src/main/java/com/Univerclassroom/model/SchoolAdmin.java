@@ -50,7 +50,11 @@ public class SchoolAdmin implements Serializable{
     @JoinColumn(name="SchoolAdminId")
 	private Set<Teacher> teacher;
 
+	@OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="SchoolAdminId")
+	private Set<StudentDivisonToStudent> studentDivisonToStudent;
 
+	
     public School getSchool() {
 		return school;
 	}
@@ -150,6 +154,15 @@ public class SchoolAdmin implements Serializable{
 	public void setAdmin(Admin admin) {
 		this.admin = admin;
 	}
+	
+	public Set<StudentDivisonToStudent> getStudentDivisonToStudent() {
+		return studentDivisonToStudent;
+	}
+	public void setStudentDivisonToStudent(
+			Set<StudentDivisonToStudent> studentDivisonToStudent) {
+		this.studentDivisonToStudent = studentDivisonToStudent;
+	}
+	
 	public HashMap<String, String> getHashmap() {
 		// TODO Auto-generated method stub
 		return null;

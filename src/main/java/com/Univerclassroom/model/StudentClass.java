@@ -30,8 +30,8 @@ public class StudentClass implements Serializable{
 	@ManyToOne
 	private SchoolAdmin schoolAdmin;
 
-	@OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="StudentClassId")
+/*	@OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="StudentClassId",insertable=true, updatable=true)
 	private Set<StudentDivision> studentDivision;
 	
 	public Set<StudentDivision> getStudentDivision() {
@@ -41,7 +41,7 @@ public class StudentClass implements Serializable{
 	public void setStudentDivision(Set<StudentDivision> studentDivision) {
 		this.studentDivision = studentDivision;
 	}
-
+*/
 	public long getStudentClassId() {
 		return StudentClassId;
 	}

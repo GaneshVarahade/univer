@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.Univerclassroom.model.Student;
 import com.Univerclassroom.model.StudentDivision;
 
 
@@ -62,8 +63,14 @@ public class StudentDivisionDaoImpl implements StudentDivisionDao{
 
 	@Override
 	public StudentDivision getStudentDivisionById(long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		session = sessionFactory.openSession();
+		StudentDivision studentDivision = (StudentDivision) session.load(StudentDivision.class,
+				new Long(id));
+		tx = session.getTransaction();
+		session.beginTransaction();
+		tx.commit();
+		session.close();
+		return studentDivision;	
 	}
 
 }

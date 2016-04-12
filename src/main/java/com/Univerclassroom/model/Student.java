@@ -2,7 +2,9 @@ package com.Univerclassroom.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -48,9 +50,21 @@ public class Student implements Serializable{
 	private String RollNo;
 	private String StudentUsername;
 	private String StudentPassword;
+	private boolean divisionAssigned;
 	
 	@ManyToOne
 	private SchoolAdmin  Schooladmin;
+
+	/*@ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
+	private StudentDivision studentDivision;
+	
+	public StudentDivision getStudentDivision() {
+		return studentDivision;
+	}
+
+	public void setStudentDivision(StudentDivision studentDivision) {
+		this.studentDivision = studentDivision;
+	}*/
 
 	public SchoolAdmin getSchooladmin() {
 		return Schooladmin;
@@ -267,6 +281,16 @@ public class Student implements Serializable{
 	public void setPhysicallyHandicapped(boolean physicallyHandicapped) {
 		PhysicallyHandicapped = physicallyHandicapped;
 	}
+
+
+	public boolean isDivisionAssigned() {
+		return divisionAssigned;
+	}
+
+	public void setDivisionAssigned(boolean divisionAssigned) {
+		this.divisionAssigned = divisionAssigned;
+	}
+
 	
 	public Student(){
 		

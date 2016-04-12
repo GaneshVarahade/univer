@@ -45,8 +45,7 @@ public class StudentDivisionServicesImpl implements StudentDivisionServices{
 
 	@Override
 	public StudentDivision getStudentDivisionById(long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return studentDivisionDao.getStudentDivisionById(id);
 	}
 
 }
